@@ -1,13 +1,16 @@
 require 'notarius'
 
 describe Notarius do
+  before :each do
+    Dir['*.log'].each { |log| FileUtils.rm log }
+  end
+
   it 'creates a namespace when configured' do
     Notarius.configure 'BIG'
     Notarius::BIG.class.should == Module
   end
 
   it 'can log to a file' do
-    FileUtils.rm 'player.log' if File.exists? 'player.log'
     Notarius.configure 'BIG' do |l|
       l.file.path = 'player.log'
     end
@@ -22,7 +25,6 @@ describe Notarius do
   end
 
   it 'allows namespaces to be overwritten' do
-    FileUtils.rm 'player.log' if File.exists? 'player.log'
     Notarius.configure 'BIG' do |l|
       l.file.path = 'player.log'
     end
@@ -35,7 +37,6 @@ describe Notarius do
     Player.new
     File.read('player.log').should include('New player created!')
 
-    FileUtils.rm 'monster.log' if File.exists? 'monster.log'
     Notarius.configure 'BIG' do |l|
       l.file.path = 'monster.log'
     end
