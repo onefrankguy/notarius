@@ -1,2 +1,3 @@
+*.swp
 .rspec
 coverage/
