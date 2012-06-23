@@ -1,0 +1,2 @@
+module Notarius
+end
