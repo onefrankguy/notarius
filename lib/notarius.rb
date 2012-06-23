@@ -11,7 +11,11 @@ module Notarius
         @@log
       end
     end
-    self.const_set name, mod
+    if self.const_defined? name
+      self.const_get(name).extend mod
+    else
+      self.const_set name, mod
+    end
   end
 
   class LogConfig 
