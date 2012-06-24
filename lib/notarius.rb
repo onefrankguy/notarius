@@ -33,15 +33,13 @@ module Notarius
 
     def configure config
       if !config.console
-        logger = @loggers.delete(:console)
-        logger.close unless logger.nil?
+        delete(:console)
       else
         add(:console, $stdout)
       end
 
       if !config.file
-        logger = @loggers.delete(config.file)
-        logger.close unless logger.nil?
+        delete(config.file)
       else
         add(config.file, config.file)
       end
@@ -57,6 +55,11 @@ module Notarius
         logger.level = Logger::INFO
         @loggers[key] = logger
       end
+    end
+
+    def delete key
+      logger = @loggers.delete(key)
+      logger.close rescue nil
     end
   end
 
