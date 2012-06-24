@@ -127,6 +127,7 @@ describe Notarius do
         log.info "Message\twith\ttabs"
         log.info "Message\rwith\rcarriage\rreturns"
         log.info "Message\nwith\nnewlines"
+        log.info '   Message with extra spaces '
       end
     end
     player.new
@@ -135,6 +136,7 @@ describe Notarius do
     lines[0].should include('Message with tabs')
     lines[1].should include('Message with carriage returns')
     lines[2].should include('Message with newlines')
+    lines[3].should end_with('] Message with extra spaces')
   end
 
   it 'makes logs tweetable' do
