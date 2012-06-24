@@ -117,4 +117,23 @@ describe Notarius do
     stamp = lines.first.match(/\[([^\]]+)/)[1]
     ((start - 1)..(start + 1)).should cover(Time.parse(stamp))
   end
+
+  it 'converts whitespace to spaces' do
+    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
+    player = Class.new do
+      include Notarius::BIG
+      def initialize
+        log.info "Message\twith\ttabs"
+        log.info "Message\rwith\rcarriage\rreturns"
+        log.info "Message\nwith\nnewlines"
+      end
+    end
+    player.new
+
+    lines = File.read('player.log').split("\n")
+    lines[0].should include('Message with tabs')
+    lines[1].should include('Message with carriage returns')
+    lines[2].should include('Message with newlines')
+  end
 end 

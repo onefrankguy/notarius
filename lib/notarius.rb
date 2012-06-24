@@ -68,6 +68,7 @@ module Notarius
         logger = Logger.new stream
         logger.level = Logger::INFO
         logger.formatter = proc do |severity, datetime, progname, msg|
+          msg.gsub!(/[\t\r\n\s]+/, ' ')
           "#{severity} [#{datetime.utc.iso8601}] #{msg}\n"
         end
         @loggers[key] = logger
