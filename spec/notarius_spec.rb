@@ -11,9 +11,7 @@ describe Notarius do
   end
 
   it 'can log to a file' do
-    Notarius.configure 'BIG' do |l|
-      l.file.path = 'player.log'
-    end
+    Notarius.configure('BIG') { |l| l.file.path = 'player.log' }
     class Player
       include Notarius::BIG
       def initialize
@@ -25,9 +23,7 @@ describe Notarius do
   end
 
   it 'allows namespaces to be overwritten' do
-    Notarius.configure 'BIG' do |l|
-      l.file.path = 'player.log'
-    end
+    Notarius.configure('BIG') { |l| l.file.path = 'player.log' }
     class Player
       include Notarius::BIG
       def initialize
@@ -37,9 +33,7 @@ describe Notarius do
     Player.new
     File.read('player.log').should include('New player created!')
 
-    Notarius.configure 'BIG' do |l|
-      l.file.path = 'monster.log'
-    end
+    Notarius.configure('BIG') { |l| l.file.path = 'monster.log' }
     class Monster 
       include Notarius::BIG
       def initialize
