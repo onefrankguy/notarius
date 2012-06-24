@@ -32,16 +32,16 @@ module Notarius
     end
 
     def configure config
-      if !config.console
-        delete(:console)
-      else
+      if config.console
         add(:console, $stdout)
+      else
+        delete(:console)
       end
 
-      if !config.file
-        delete(config.file)
-      else
+      if config.file
         add(config.file, config.file)
+      else
+        delete(config.file)
       end
     end
 
