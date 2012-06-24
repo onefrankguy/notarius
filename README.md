@@ -34,8 +34,7 @@ without clobbering each others logs.
 require 'notarius'
 
 Notarius.configure 'BIG' do |log|
-  log.file.enable = true
-  log.file.path = '/var/log/notarius/notebook.log'
+  log.file = '/var/log/notarius/notebook.log'
 end
 ```
 
@@ -50,7 +49,7 @@ you want console logging, you have to enable it.
 
 ```ruby
 Notarius.configure 'BIG' do |log|
-  log.console.enable = true
+  log.console = true
 end
 ```
 

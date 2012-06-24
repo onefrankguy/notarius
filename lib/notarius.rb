@@ -11,10 +11,10 @@ module Notarius
       define_method :log do
         if @log.nil?
           config = Notarius.config(name)
-          if config.console.enable
+          if config.console
             @log = Logger.new(STDOUT)
           else
-            @log = Logger.new(config.file.path)
+            @log = Logger.new(config.file)
           end
           @log.level = Logger::INFO
         end
@@ -37,19 +37,8 @@ module Notarius
     attr_accessor :console
     attr_accessor :file
     def initialize
-      @console = ConsoleConfig.new
-      @file = FileConfig.new
+      @console = false
+      @file = nil
     end
-  end
-
-  class ConsoleConfig
-    attr_accessor :enable
-    def initialize
-      @enable = false
-    end
-  end
-
-  class FileConfig
-    attr_accessor :path
   end
 end
