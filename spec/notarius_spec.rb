@@ -1,13 +1,30 @@
 require 'notarius'
+require 'stringio'
 
 describe Notarius do
   before :each do
     Dir['*.log'].each { |log| FileUtils.rm log }
+    Notarius.instance_variable_set :@configs, {}
   end
 
   it 'creates a namespace when configured' do
     Notarius.configure 'BIG'
     Notarius::BIG.class.should == Module
+  end
+
+  it 'can log to STDOUT' do
+    Notarius.configure('BIG') { |l| l.console.enable = true }
+    player = Class.new do
+      include Notarius::BIG
+      def initialize io
+        @log = Logger.new(io)
+        log.info 'New player created!'
+      end
+    end
+    output = StringIO.new
+    player.new output
+    output.seek 0
+    output.read.should include('New player created!')
   end
 
   it 'can log to a file' do
