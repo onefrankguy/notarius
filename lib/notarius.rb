@@ -1,4 +1,5 @@
 require 'logger'
+require 'time'
 
 module Notarius
   @configs = {}
@@ -67,7 +68,7 @@ module Notarius
         logger = Logger.new stream
         logger.level = Logger::INFO
         logger.formatter = proc do |severity, datetime, progname, msg|
-          "#{severity} [#{datetime}] #{msg}\n"
+          "#{severity} [#{datetime.utc.iso8601}] #{msg}\n"
         end
         @loggers[key] = logger
       end

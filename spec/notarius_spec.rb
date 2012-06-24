@@ -99,4 +99,22 @@ describe Notarius do
     lines[1].should match('^WARN')
     lines[2].should match('^ERROR')
   end
+
+  it 'formats timestamps as ISO 8601' do
+    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
+    player = Class.new do
+      include Notarius::BIG
+      def initialize
+        log.info 'New player created!'
+      end
+    end
+
+    start = Time.now.utc
+    player.new
+
+    lines = File.read('player.log').split("\n")
+    stamp = lines.first.match(/\[([^\]]+)/)[1]
+    ((start - 1)..(start + 1)).should cover(Time.parse(stamp))
+  end
 end 
