@@ -49,6 +49,14 @@ module Notarius
       @loggers.values.each { |l| l.info message }
     end
 
+    def warn message
+      @loggers.values.each { |l| l.warn message }
+    end
+
+    def error message
+      @loggers.values.each { |l| l.error message }
+    end
+
     def add key, stream
       unless @loggers.has_key? key
         # The line below is a hack to get around Ruby's Logger class
@@ -59,7 +67,7 @@ module Notarius
         logger = Logger.new stream
         logger.level = Logger::INFO
         logger.formatter = proc do |severity, datetime, progname, msg|
-          "#{severity} [#{datetime}] #{msg}"
+          "#{severity} [#{datetime}] #{msg}\n"
         end
         @loggers[key] = logger
       end

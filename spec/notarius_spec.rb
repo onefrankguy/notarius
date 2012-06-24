@@ -87,12 +87,16 @@ describe Notarius do
     player = Class.new do
       include Notarius::BIG
       def initialize
-        log.info 'New player created!'
+        log.info 'This is information.'
+        log.warn 'This is a warning.'
+        log.error 'This is an error.'
       end
     end
     player.new
 
     lines = File.read('player.log').split("\n")
     lines[0].should match('^INFO')
+    lines[1].should match('^WARN')
+    lines[2].should match('^ERROR')
   end
 end 
