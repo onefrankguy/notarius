@@ -69,7 +69,9 @@ module Notarius
         logger.level = Logger::INFO
         logger.formatter = proc do |severity, datetime, progname, msg|
           msg.gsub!(/[\t\r\n\s]+/, ' ')
-          "#{severity} [#{datetime.utc.iso8601}] #{msg}\n"
+          msg = "#{severity} [#{datetime.utc.iso8601}] #{msg}"
+          msg = msg[0, 137] + '...' if msg.length > 140
+          msg + "\n"
         end
         @loggers[key] = logger
       end

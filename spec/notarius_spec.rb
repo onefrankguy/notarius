@@ -136,4 +136,25 @@ describe Notarius do
     lines[1].should include('Message with carriage returns')
     lines[2].should include('Message with newlines')
   end
+
+  it 'makes logs tweetable' do
+    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
+    player = Class.new do
+      include Notarius::BIG
+      def initialize
+        message = <<-EOF
+        This is a really, really long message that needs to
+        be more than 140 characters so that Notarius can trim it
+        down to something more reasonable in length.
+        EOF
+        message.length.should > 140 
+        log.info message
+      end
+    end
+    player.new
+
+    lines = File.read('player.log').split("\n")
+    lines.first.length.should == 140
+  end
 end 
