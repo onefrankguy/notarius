@@ -59,7 +59,7 @@ describe Notarius do
     File.read('monster.log').should include('Player is running.')
   end
 
-  it 'should allow for unique namespaces' do
+  it 'allows for unique namespaces' do
     Notarius.configure('Player') { |l| l.file = 'player.log' }
     player = Class.new do 
       include Notarius::Player
