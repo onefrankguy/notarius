@@ -12,30 +12,6 @@ describe Notarius do
     Notarius::BIG.class.should == Module
   end
 
-  it 'can log to streams' do
-    output1 = StringIO.new
-    output2 = StringIO.new
-
-    Notarius.configure('BIG') do |l|
-      l.tee output1
-      l.tee output2
-    end
-
-    player = Class.new do
-      include Notarius::BIG
-      def initialize
-        log.info 'New player created!'
-      end
-    end
-    player.new
-
-    output1.seek 0
-    output1.read.should include('New player created!')
-
-    output2.seek 0
-    output2.read.should include('New player created!')
-  end
-
   it 'can log to STDOUT' do
     output = StringIO.new
 

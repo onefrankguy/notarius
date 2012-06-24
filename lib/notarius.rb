@@ -55,15 +55,11 @@ module Notarius
     end
 
     def console= val
-      tee $stdout if val
+      @streams << $stdout if val
     end
 
     def file= path
-      tee path
-    end
-
-    def tee stream
-      @streams << stream
+      @streams << path
     end
   end
 end
