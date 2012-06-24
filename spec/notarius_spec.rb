@@ -42,18 +42,21 @@ describe Notarius do
 
   it 'allows namespaces to be overwritten' do
     Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
     player = Class.new do
       include Notarius::BIG
-      def initialize 
-        log.info 'New player created!'
+      def run 
+        log.info 'Player is running.'
       end
     end
-    player.new
-    File.read('player.log').should include('New player created!')
+    p = player.new
+
+    p.run
+    File.read('player.log').should include('Player is running.')
 
     Notarius.configure('BIG') { |l| l.file = 'monster.log' }
-    player.new
-    File.read('monster.log').should include('New player created!')
+    p.run
+    File.read('monster.log').should include('Player is running.')
   end
 
   it 'should allow for unique namespaces' do
