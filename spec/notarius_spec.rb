@@ -7,11 +7,6 @@ describe Notarius do
     Notarius.instance_variable_set :@configs, {}
   end
 
-  it 'creates a namespace when configured' do
-    Notarius.configure 'BIG'
-    Notarius::BIG.class.should == Module
-  end
-
   it 'can log to STDOUT' do
     output = StringIO.new
 
