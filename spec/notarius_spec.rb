@@ -37,18 +37,24 @@ describe Notarius do
   end
 
   it 'can log to STDOUT' do
-    Notarius.configure('BIG') { |l| l.console = true }
+    output = StringIO.new
+
+    begin
+      $stdout = output
+      Notarius.configure('BIG') { |l| l.console = true }
+    ensure
+      $stdout = STDOUT
+    end
+
     player = Class.new do
       include Notarius::BIG
-      def initialize io
-        @log = Logger.new(io)
+      def initialize
         log.info 'New player created!'
       end
     end
-    output = StringIO.new
-    player.new output
-    output.seek 0
-    output.read.should include('New player created!')
+    player.new
+
+    output.string.should include('New player created!')
   end
 
   it 'can log to a file' do

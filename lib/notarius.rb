@@ -55,7 +55,7 @@ module Notarius
     end
 
     def console= val
-      tee STDOUT if val
+      tee $stdout if val
     end
 
     def file= path
