@@ -51,8 +51,16 @@ module Notarius
 
     def add key, stream
       unless @loggers.has_key? key
+        # The line below is a hack to get around Ruby's Logger class
+        # wanting to put a header in the log file. Think about writing
+        # my own logger class.
+        FileUtils.touch key unless key == :console
+
         logger = Logger.new stream
         logger.level = Logger::INFO
+        logger.formatter = proc do |severity, datetime, progname, msg|
+          "#{severity} [#{datetime}] #{msg}"
+        end
         @loggers[key] = logger
       end
     end

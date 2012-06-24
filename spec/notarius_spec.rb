@@ -80,4 +80,19 @@ describe Notarius do
     player.new
     File.read('monster.log').should_not include('New player created!')
   end
+
+  it 'logs levels in the message' do
+    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
+    player = Class.new do
+      include Notarius::BIG
+      def initialize
+        log.info 'New player created!'
+      end
+    end
+    player.new
+
+    lines = File.read('player.log').split("\n")
+    lines[0].should match('^INFO')
+  end
 end 
