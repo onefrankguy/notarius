@@ -1,21 +1,32 @@
 require 'logger'
 
 module Notarius
+  @configs = {}
+
   def self.configure name, &block
-    config = LogConfig.new
-    config.instance_eval(&block) if block_given?
+    @configs[name] = LogConfig.new if @configs[name].nil?
+    @configs[name].instance_eval(&block) if block_given?
+
     mod = Module.new do
-      @@log = Logger.new(config.file.path)
-      @@log.level = Logger::INFO
-      def log
-        @@log
+      define_method :log do
+        if @log.nil?
+          config = Notarius.config(name)
+          @log = Logger.new(config.file.path)
+          @log.level = Logger::INFO
+        end
+        @log
       end
     end
+
     if self.const_defined? name
       self.const_get(name).extend mod
     else
       self.const_set name, mod
     end
+  end
+
+  def self.config name
+    @configs[name]
   end
 
   class LogConfig 
