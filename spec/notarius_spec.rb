@@ -8,14 +8,7 @@ describe Notarius do
   end
 
   it 'can log to STDOUT' do
-    output = StringIO.new
-
-    begin
-      $stdout = output
-      Notarius.configure('BIG') { |l| l.console = true }
-    ensure
-      $stdout = STDOUT
-    end
+    Notarius.configure('BIG') { |l| l.console = true }
 
     player = Class.new do
       include Notarius::BIG
@@ -23,7 +16,14 @@ describe Notarius do
         log.info 'New player created!'
       end
     end
-    player.new
+
+    output = StringIO.new
+    begin
+      $stdout = output
+      player.new
+    ensure
+      $stdout = STDOUT
+    end
 
     output.string.should include('New player created!')
   end

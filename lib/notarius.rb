@@ -10,8 +10,7 @@ module Notarius
     mod = Module.new do
       define_method :log do
         if @secreatry.nil?
-          @secretary = Secretary.new
-          @secretary << Notarius.config(name).streams
+          @secretary = Secretary.new(Notarius.config(name))
         end
         @secretary
       end
@@ -29,17 +28,11 @@ module Notarius
   end
 
   class Secretary
-    def initialize
+    def initialize config
       @loggers = []
-    end
-
-    def << *streams
-      streams.flatten!
-      streams.each do |stream|
-        logger = Logger.new stream
-        logger.level = Logger::INFO
-        @loggers << logger
-      end
+      @loggers << Logger.new($stdout) if config.console
+      @loggers << Logger.new(config.file) if config.file
+      @loggers.each { |logger| logger.level = Logger::INFO }
     end
 
     def info message
@@ -48,18 +41,7 @@ module Notarius
   end
 
   class Config 
-    attr_reader :streams
-
-    def initialize
-      @streams = []
-    end
-
-    def console= val
-      @streams << $stdout if val
-    end
-
-    def file= path
-      @streams << path
-    end
+    attr_accessor :console
+    attr_accessor :file
   end
 end
