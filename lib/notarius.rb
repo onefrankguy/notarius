@@ -35,24 +35,28 @@ module Notarius
       if !config.console
         logger = @loggers.delete(:console)
         logger.close unless logger.nil?
-      elsif !@loggers.has_key?(:console)
-        logger = Logger.new($stdout)
-        logger.level = Logger::INFO
-        @loggers[:console] = logger
+      else
+        add(:console, $stdout)
       end
 
       if !config.file
         logger = @loggers.delete(config.file)
         logger.close unless logger.nil?
-      elsif !@loggers.has_key?(config.file)
-        logger = Logger.new(config.file)
-        logger.level = Logger::INFO
-        @loggers[config.file] = logger
+      else
+        add(config.file, config.file)
       end
     end
 
     def info message
       @loggers.values.each { |l| l.info message }
+    end
+
+    def add key, stream
+      unless @loggers.has_key? key
+        logger = Logger.new stream
+        logger.level = Logger::INFO
+        @loggers[key] = logger
+      end
     end
   end
 
