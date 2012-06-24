@@ -4,7 +4,7 @@ module Notarius
   @configs = {}
 
   def self.configure name, &block
-    @configs[name] = LogConfig.new if @configs[name].nil?
+    @configs[name] = Config.new if @configs[name].nil?
     @configs[name].instance_eval(&block) if block_given?
 
     mod = Module.new do
@@ -47,7 +47,7 @@ module Notarius
     end
   end
 
-  class LogConfig 
+  class Config 
     attr_reader :streams
 
     def initialize
