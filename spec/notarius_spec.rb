@@ -49,4 +49,26 @@ describe Notarius do
     Monster.new
     File.read('monster.log').should include('New monster created!')
   end
+
+  it 'should allow for unique namespaces' do
+    Notarius.configure('PlayerLog') { |l| l.file.path = 'player.log' }
+    class Player
+      include Notarius::PlayerLog
+      def initialize
+        log.info 'New player created!'
+      end
+    end
+
+    Notarius.configure('MonsterLog') { |l| l.file.path = 'monster.log' }
+    class Monster 
+      include Notarius::MonsterLog
+      def initialize
+        log.info 'New monster created!'
+      end
+    end
+
+    Monster.new
+    Player.new
+    File.read('monster.log').should_not include('New player created!')
+  end
 end 
