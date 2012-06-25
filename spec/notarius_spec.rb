@@ -7,6 +7,10 @@ describe Notarius do
     Notarius.instance_variable_set :@configs, {}
   end
 
+  after :all do
+    Dir['*.log'].each { |log| FileUtils.rm log }
+  end
+
   it 'can log to STDOUT' do
     Notarius.configure('BIG') { |l| l.console = true }
 
