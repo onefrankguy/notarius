@@ -7,6 +7,7 @@ module Notarius
   def self.configure name, &block
     @configs[name] = Config.new if @configs[name].nil?
     @configs[name].instance_eval(&block) if block_given?
+    return if self.const_defined? name
 
     mod = Module.new do
       define_method :log do
@@ -15,12 +16,7 @@ module Notarius
         @secretary
       end
     end
-
-    if self.const_defined? name
-      self.const_get(name).extend mod
-    else
-      self.const_set name, mod
-    end
+    self.const_set name, mod
   end
 
   def self.config name

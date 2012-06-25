@@ -159,11 +159,4 @@ describe Notarius do
     lines = File.read('player.log').split("\n")
     lines.first.length.should == 140
   end
-
-  it 'can extend existing modules' do
-    module Notarius::Noodles
-    end
-    Notarius.configure('Noodles') { |l| l.console = true }
-    Notarius::Noodles.should respond_to(:log)
-  end
 end 
