@@ -16,8 +16,8 @@ describe Notarius::Formatter do
       message.should == '[2012-06-26T00:41:30Z]'
     end
 
-    it 'puts levels at the start of a message' do
-      message = formatter.call('INFO', nil, nil, nil)
+    it 'makes severity all upper case' do
+      message = formatter.call('info', nil, nil, nil)
       message.should == 'INFO'
     end
 

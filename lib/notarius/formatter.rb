@@ -5,11 +5,16 @@ module Notarius
     # This is the interface Ruby's Logger class expects.
     def call severity, timestamp, application, message
       result = []
-      result << severity if severity
+      result << format_severity(severity) if severity
       result << '[' + format_timestamp(timestamp) + ']' if timestamp
       result << remove_whitespace(message) if message
       make_tweetable(result.join(' '))
     end
+
+    def format_severity severity
+      severity.upcase
+    end
+    private :format_severity
 
     def remove_whitespace message
       message.gsub(/[\t\r\n\s]+/, ' ').strip
