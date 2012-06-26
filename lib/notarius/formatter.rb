@@ -12,7 +12,7 @@ module Notarius
     end
 
     def remove_whitespace message
-      message.gsub!(/[\t\r\n\s]+/, ' ').strip
+      message.gsub(/[\t\r\n\s]+/, ' ').strip
     end
     private :remove_whitespace
 
