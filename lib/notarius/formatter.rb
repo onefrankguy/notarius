@@ -12,7 +12,7 @@ module Notarius
     end
 
     def format_severity severity
-      severity.upcase
+      severity.strip.upcase
     end
     private :format_severity
 

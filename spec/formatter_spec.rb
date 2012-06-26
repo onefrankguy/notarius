@@ -21,6 +21,11 @@ describe Notarius::Formatter do
       message.should == "INFO\n"
     end
 
+    it 'removes extra whitespace from severity' do
+      message = formatter.call("\swarn\s", nil, nil, nil)
+      message.should == "WARN\n"
+    end
+
     it 'ignores program name field' do
       message = formatter.call(nil, nil, 'noodles', nil)
       message.should == "\n"
