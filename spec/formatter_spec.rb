@@ -20,5 +20,9 @@ describe Notarius::Formatter do
       message = formatter.call('INFO', nil, nil, nil)
       message.should == 'INFO'
     end
+
+    it 'ignores program name field' do
+      formatter.call(nil, nil, 'noodles', nil).should be_empty
+    end
   end
 end
