@@ -8,7 +8,7 @@ module Notarius
       result << format_severity(severity) if severity
       result << '[' + format_timestamp(timestamp) + ']' if timestamp
       result << remove_whitespace(message) if message
-      make_tweetable(result.join(' '))
+      make_tweetable(result.join(' ')) + "\n"
     end
 
     def format_severity severity
