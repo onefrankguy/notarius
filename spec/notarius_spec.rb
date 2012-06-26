@@ -84,4 +84,46 @@ describe Notarius do
     player.new
     File.read('monster.log').should_not include('New player created!')
   end
+
+  it 'allows info to be logged' do
+    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
+    player = Class.new do
+      include Notarius::BIG
+      def initialize
+        log.info 'Info!'
+      end
+    end
+    player.new
+
+    File.read('player.log').should include('Info!')
+  end
+
+  it 'allows warnings to be logged' do
+    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
+    player = Class.new do
+      include Notarius::BIG
+      def initialize
+        log.warn 'Warning!'
+      end
+    end
+    player.new
+
+    File.read('player.log').should include('Warning!')
+  end
+
+  it 'allows errors to be logged' do
+    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+
+    player = Class.new do
+      include Notarius::BIG
+      def initialize
+        log.error 'Error!'
+      end
+    end
+    player.new
+
+    File.read('player.log').should include('Error!')
+  end
 end 
