@@ -7,23 +7,23 @@ describe Notarius::Formatter do
     it 'converts whitespace to spaces' do
       message = "\sMessage\r\nwith\twhitespace  "
       message = formatter.call(nil, nil, nil, message)
-      message.should == "Message with whitespace\n"
+      message.should == 'Message with whitespace'
     end
 
     it 'formats timestamps as ISO 8601' do
       timestamp = Time.parse('2012-06-25 20:41:30 -0400')
       message = formatter.call(nil, timestamp, nil, nil)
-      message.should == "[2012-06-26T00:41:30Z]\n"
+      message.should == '[2012-06-26T00:41:30Z]'
     end
 
     it 'makes severity all upper case' do
       message = formatter.call('info', nil, nil, nil)
-      message.should == "INFO\n"
+      message.should == 'INFO'
     end
 
     it 'ignores program name field' do
       message = formatter.call(nil, nil, 'noodles', nil)
-      message.should == "\n"
+      message.should be_empty
     end
 
     it 'makes messages tweetable' do
@@ -34,18 +34,21 @@ describe Notarius::Formatter do
       EOF
       message.length.should > 140
       message = formatter.call(nil, nil, nil, message)
-      message.length.should == 141
+      message.length.should == 140
     end
 
     it 'formats messages as "level [timestamp] message"' do
       timestamp = Time.parse('2012-06-25 21:17:44 -0400')
       message = formatter.call('LEVEL', timestamp, nil, 'message')
-      message.should == "LEVEL [2012-06-26T01:17:44Z] message\n"
+      message.should == 'LEVEL [2012-06-26T01:17:44Z] message'
     end
 
-    it 'ends messages with newlines' do
-      message = formatter.call(nil, nil, nil, nil)
-      message.should == "\n"
+    it 'uses blocks for post format hooks' do
+      hooked_formatter = Notarius::Formatter.new do |message|
+        message + ' redacted'
+      end
+      message = hooked_formatter.call(nil, nil, nil, 'message')
+      message.should == 'message redacted'
     end
   end
 end

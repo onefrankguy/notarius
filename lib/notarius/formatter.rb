@@ -2,13 +2,21 @@ require 'time'
 
 module Notarius
   class Formatter
+    def initialize &block
+      if block_given?
+        @post_format_hook = block
+      end
+    end
+
     # This is the interface Ruby's Logger class expects.
     def call severity, timestamp, application, message
       result = []
       result << format_severity(severity) if severity
       result << '[' + format_timestamp(timestamp) + ']' if timestamp
       result << remove_whitespace(message) if message
-      make_tweetable(result.join(' ')) + "\n"
+      result = make_tweetable(result.join(' '))
+      result = @post_format_hook.call(result) if @post_format_hook
+      result
     end
 
     def format_severity severity
