@@ -69,11 +69,13 @@ module Notarius
         @loggers[key] = logger
       end
     end
+    private :add
 
     def delete key
       logger = @loggers.delete(key)
       logger.close rescue nil
     end
+    private :delete
   end
 
   class Config
