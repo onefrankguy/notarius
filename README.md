@@ -113,9 +113,9 @@ like this:
 
 ```bash
 level [timestamp] message
-!  backtrace
-!  backtrace
-!  backtrace 
+! backtrace
+! backtrace
+! backtrace 
 ```
 
 This makes it easy to log exceptions. More importantly, it makes it easy

@@ -16,8 +16,19 @@ module Notarius
     end
     private :format_severity
 
-    def format_message message
-      message.gsub(/[\t\r\n\s]+/, ' ').strip
+    def format_message message 
+      result = []
+      if message.respond_to?(:message)
+        result << message.message
+      else
+        result << message
+      end
+      if message.respond_to?(:backtrace)
+        result << message.backtrace.map { |line| '! ' + line }
+      end
+      result.flatten!
+      result.map! { |line| line.gsub(/[\t\r\n\s]+/, ' ').strip }
+      result.join("\n")
     end
     private :format_message
 
