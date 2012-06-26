@@ -25,5 +25,16 @@ describe Notarius::Formatter do
       message = formatter.call(nil, nil, 'noodles', nil)
       message.should be_empty
     end
+
+    it 'makes messages tweetable' do
+      message = <<-EOF
+      This is a really, really long message that needs to
+      be more than 140 characters so that Notarius can trim it
+      down to something more reasonable in length.
+      EOF
+      message.length.should > 140
+      message = formatter.call(nil, nil, nil, message)
+      message.length.should == 140
+    end
   end
 end

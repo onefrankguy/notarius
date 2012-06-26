@@ -8,7 +8,7 @@ module Notarius
       result << severity if severity
       result << '[' + format_timestamp(timestamp) + ']' if timestamp
       result << remove_whitespace(message) if message
-      result.join(' ')
+      make_tweetable(result.join(' '))
     end
 
     def remove_whitespace message
@@ -20,5 +20,10 @@ module Notarius
       timestamp.utc.iso8601
     end
     private :format_timestamp
+
+    def make_tweetable message
+      message.length > 140 ? message[0, 137] + '...' : message
+    end
+    private :make_tweetable
   end
 end
