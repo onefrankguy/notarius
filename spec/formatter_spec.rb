@@ -22,7 +22,8 @@ describe Notarius::Formatter do
     end
 
     it 'ignores program name field' do
-      formatter.call(nil, nil, 'noodles', nil).should be_empty
+      message = formatter.call(nil, nil, 'noodles', nil)
+      message.should be_empty
     end
   end
 end
