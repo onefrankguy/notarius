@@ -1,5 +1,5 @@
+require 'notarius/formatter'
 require 'logger'
-require 'time'
 
 module Notarius
   @configs = {}
@@ -65,13 +65,7 @@ module Notarius
 
         logger = Logger.new stream
         logger.level = Logger::INFO
-        logger.formatter = proc do |severity, datetime, progname, msg|
-          msg.gsub!(/[\t\r\n\s]+/, ' ')
-          msg.strip!
-          msg = "#{severity} [#{datetime.utc.iso8601}] #{msg}"
-          msg = msg[0, 137] + '...' if msg.length > 140
-          msg + "\n"
-        end
+        logger.formatter = Formatter.new
         @loggers[key] = logger
       end
     end
