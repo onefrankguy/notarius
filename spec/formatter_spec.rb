@@ -37,9 +37,9 @@ describe Notarius::Formatter do
       message.length.should == 140
     end
 
-    it 'formats messages as "level [timestamp] message"' do
+    it 'formats messages as "LEVEL [timestamp] message"' do
       timestamp = Time.parse('2012-06-25 21:17:44 -0400')
-      message = formatter.call('LEVEL', timestamp, nil, 'message')
+      message = formatter.call('level', timestamp, nil, 'message')
       message.should == 'LEVEL [2012-06-26T01:17:44Z] message'
     end
 
