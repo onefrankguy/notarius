@@ -15,5 +15,10 @@ describe Notarius::Formatter do
       message = formatter.call(nil, timestamp, nil, nil)
       message.should == '[2012-06-26T00:41:30Z]'
     end
+
+    it 'puts levels at the start of a message' do
+      message = formatter.call('INFO', nil, nil, nil)
+      message.should == 'INFO'
+    end
   end
 end
