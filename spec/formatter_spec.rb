@@ -71,5 +71,11 @@ describe Notarius::Formatter do
       message = formatter.call(nil, nil, nil, object.new)
       message.should == "details\n"
     end
+
+    it 'formats exceptions without backtraces nicely' do
+      exception = Exception.new('message')
+      message = formatter.call(nil, nil, nil, exception)
+      message.should == "message\n"
+    end
   end
 end

@@ -24,7 +24,8 @@ module Notarius
         result << message
       end
       if message.respond_to?(:backtrace)
-        result << message.backtrace.map { |line| '! ' + line }
+        backtrace = message.backtrace || []
+        result << backtrace.map { |line| '! ' + line }
       end
       result.flatten!
       result.map! { |line| line.kind_of?(String) ? line : line.inspect }
