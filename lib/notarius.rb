@@ -1,4 +1,5 @@
 require 'notarius/formatter'
+require 'notarius/config'
 require 'logger'
 
 module Notarius
@@ -76,10 +77,5 @@ module Notarius
       logger.close rescue nil
     end
     private :delete
-  end
-
-  class Config
-    attr_accessor :console
-    attr_accessor :file
   end
 end
