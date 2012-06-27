@@ -24,15 +24,22 @@ module Notarius
         result << message
       end
       if message.respond_to?(:backtrace)
-        backtrace = message.backtrace || []
-        result << backtrace.map { |line| '! ' + line }
+        backtrace = [message.backtrace]
+        backtrace.flatten!
+        backtrace.compact!
+        result << backtrace.map { |line| "! %s" % clean_message(line) }
       end
       result.flatten!
-      result.map! { |line| line.kind_of?(String) ? line : line.inspect }
-      result.map! { |line| line.gsub(/[\t\r\n\s]+/, ' ').strip }
+      result.map! { |line| clean_message(line) }
       result.join("\n")
     end
     private :format_message
+
+    def clean_message message
+      message = message.inspect unless message.kind_of?(String)
+      message.gsub(/[\t\r\n\s]+/, ' ').strip
+    end
+    private :clean_message
 
     def format_timestamp timestamp 
       timestamp.utc.iso8601
