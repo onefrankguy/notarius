@@ -27,6 +27,7 @@ module Notarius
         result << message.backtrace.map { |line| '! ' + line }
       end
       result.flatten!
+      result.map! { |line| line.kind_of?(String) ? line : line.inspect }
       result.map! { |line| line.gsub(/[\t\r\n\s]+/, ' ').strip }
       result.join("\n")
     end

@@ -61,5 +61,15 @@ describe Notarius::Formatter do
       lines[1].should == '! trace this line'
       lines[2].should == '! back to here'
     end
+
+    it 'formats objects nicely' do
+      object = Class.new do
+        def inspect
+          'details'
+        end
+      end
+      message = formatter.call(nil, nil, nil, object.new)
+      message.should == "details\n"
+    end
   end
 end
