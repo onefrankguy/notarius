@@ -10,9 +10,13 @@ module Notarius
     def configure config
       if config.console
         add :console, logger(config.console, $stdout)
+      else
+        delete :console
       end
       if config.file
         add :file, config.file
+      else
+        delete :file
       end
     end
 
@@ -33,6 +37,11 @@ module Notarius
       @loggers[key].formatter = Formatter.new
     end
     private :add
+
+    def delete key
+      @loggers.delete(key)
+    end
+    private :delete
 
     def logger *args
       args.find { |arg| loggable?(arg) }
