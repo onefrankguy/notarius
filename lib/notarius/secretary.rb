@@ -27,5 +27,6 @@ module Notarius
       @loggers[key] = Logger.new stream
       @loggers[key].formatter = Formatter.new
     end
+    private :add
   end
 end
