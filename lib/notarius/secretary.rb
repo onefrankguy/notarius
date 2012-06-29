@@ -7,6 +7,10 @@ module Notarius
       @loggers = {}
     end
 
+    def configure config
+      add 'logger', config.file
+    end
+
     def info message
       @loggers.values.each { |l| l.info message }
     end
