@@ -49,5 +49,23 @@ describe Notarius::TempSecretary do
       io1.string.should match(/^INFO \[[^\]]+\] info message\n$/)
       io2.string.should match(/^INFO \[[^\]]+\] info message\n$/)
     end
+
+    it 'defaults console to stdout' do
+      config = Notarius::Config.new
+      config.console = true
+      secretary = Notarius::TempSecretary.new
+
+      output = StringIO.new
+      stdout = $stdout
+      begin
+        $stdout = output
+        secretary.configure config
+        secretary.info 'message'
+      ensure
+        $stdout = stdout 
+      end
+
+      output.string.should match(/^INFO \[[^\]]+\] message\n$/)
+    end
   end
 end

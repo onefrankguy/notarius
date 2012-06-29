@@ -9,7 +9,7 @@ module Notarius
 
     def configure config
       if config.console
-        add :console, config.console
+        add :console, logger(config.console, $stdout)
       end
       if config.file
         add :file, config.file
@@ -33,5 +33,15 @@ module Notarius
       @loggers[key].formatter = Formatter.new
     end
     private :add
+
+    def logger *args
+      args.find { |arg| loggable?(arg) }
+    end
+    private :logger
+
+    def loggable? stream
+      stream.respond_to?(:write) && stream.respond_to?(:close)
+    end
+    private :loggable?
   end
 end
