@@ -35,19 +35,19 @@ describe Notarius::TempSecretary do
 
   describe 'configure' do
     it 'logs to multiple outputs' do
+      io1 = StringIO.new
+      io2 = StringIO.new
+
       secretary = Notarius::TempSecretary.new
 
-      io1 = Notarius::Config.new
-      io1.file = StringIO.new
-      secretary.configure io1 
-
-      io2 = Notarius::Config.new
-      io2.file = StringIO.new
-      secretary.configure io2 
+      config = Notarius::Config.new
+      config.console = io1
+      config.file = io2 
+      secretary.configure config
 
       secretary.info 'info message'
-      io1.file.string.should match(/^INFO \[[^\]]+\] info message\n$/)
-      io2.file.string.should match(/^INFO \[[^\]]+\] info message\n$/)
+      io1.string.should match(/^INFO \[[^\]]+\] info message\n$/)
+      io2.string.should match(/^INFO \[[^\]]+\] info message\n$/)
     end
   end
 end

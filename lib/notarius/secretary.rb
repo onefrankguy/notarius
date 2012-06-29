@@ -8,7 +8,12 @@ module Notarius
     end
 
     def configure config
-      add config.file, config.file
+      if config.console
+        add :console, config.console
+      end
+      if config.file
+        add :file, config.file
+      end
     end
 
     def info message
