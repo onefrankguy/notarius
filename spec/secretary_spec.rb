@@ -7,8 +7,7 @@ describe Notarius::Secretary do
     secretary = Notarius::Secretary.new
     secretary.add 'logger', logger
     secretary.info 'info message'
-    logger.string.should end_with("info message\n")
-    logger.string.should start_with('INFO')
+    logger.string.should match(/^INFO \[[^\]]+\] info message\n$/)
   end
 
   it 'can log warning messages' do
@@ -16,8 +15,7 @@ describe Notarius::Secretary do
     secretary = Notarius::Secretary.new
     secretary.add 'logger', logger
     secretary.warn 'warning message'
-    logger.string.should end_with("warning message\n")
-    logger.string.should start_with('WARN')
+    logger.string.should match(/^WARN \[[^\]]+\] warning message\n$/)
   end
 
   it 'can log error messages' do
@@ -25,7 +23,6 @@ describe Notarius::Secretary do
     secretary = Notarius::Secretary.new
     secretary.add 'logger', logger
     secretary.error 'error message'
-    logger.string.should end_with("error message\n")
-    logger.string.should start_with('ERROR')
+    logger.string.should match(/^ERROR \[[^\]]+\] error message\n$/)
   end
 end
