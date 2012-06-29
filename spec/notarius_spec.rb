@@ -11,27 +11,6 @@ describe Notarius do
     Dir['*.log'].each { |log| FileUtils.rm log }
   end
 
-  it 'can log to STDOUT' do
-    Notarius.configure('BIG') { |l| l.console = true }
-
-    player = Class.new do
-      include Notarius::BIG
-      def initialize
-        log.info 'New player created!'
-      end
-    end
-
-    output = StringIO.new
-    begin
-      $stdout = output
-      player.new
-    ensure
-      $stdout = STDOUT
-    end
-
-    output.string.should include('New player created!')
-  end
-
   it 'can log to a file' do
     Notarius.configure('BIG') { |l| l.file = 'player.log' }
     player = Class.new do
