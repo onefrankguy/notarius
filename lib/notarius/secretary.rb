@@ -8,7 +8,7 @@ module Notarius
     end
 
     def configure config
-      add 'logger', config.file
+      add config.file, config.file
     end
 
     def info message
