@@ -1,12 +1,12 @@
 require 'notarius/secretary'
 require 'stringio'
 
-describe Notarius::Secretary do
+describe Notarius::TempSecretary do
   let(:logger) { StringIO.new }
   let(:secretary) do
     c = Notarius::Config.new
     c.file = logger
-    s = Notarius::Secretary.new
+    s = Notarius::TempSecretary.new
     s.configure c
     s
   end
