@@ -15,6 +15,10 @@ module Notarius
       @loggers.values.each { |l| l.warn message }
     end
 
+    def error message
+      @loggers.values.each { |l| l.error message }
+    end
+
     def add key, stream
       @loggers[key] = Logger.new stream
       @loggers[key].formatter = Formatter.new
