@@ -3,7 +3,7 @@ require 'logger'
 
 module Notarius
   class TempSecretary
-    def initialization
+    def initialize
       @loggers = {}
     end
 
