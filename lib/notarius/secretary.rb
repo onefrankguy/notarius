@@ -39,7 +39,8 @@ module Notarius
     private :add
 
     def delete key
-      @loggers.delete(key)
+      logger = @loggers.delete(key)
+      logger.close rescue nil
     end
     private :delete
 

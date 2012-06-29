@@ -87,5 +87,19 @@ describe Notarius::TempSecretary do
       io1.string.should_not match(/^INFO \[[^\]]+\] pasta\n$/)
       io2.string.should_not match(/^INFO \[[^\]]+\] pasta\n$/)
     end
+
+    it 'closes a logger when it removes it' do
+      config = Notarius::Config.new
+      config.console = StringIO.new 
+
+      secretary = Notarius::TempSecretary.new
+      secretary.configure config
+      secretary.info 'noodles'
+      config.console.string.should match(/^INFO \[[^\]]+\] noodles\n$/)
+
+      secretary.configure Notarius::Config.new 
+      secretary.info 'pasta'
+      config.console.should be_closed
+    end
   end
 end
