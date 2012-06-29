@@ -1,6 +1,5 @@
-require 'notarius/formatter'
+require 'notarius/secretary'
 require 'notarius/config'
-require 'logger'
 
 module Notarius
   @configs = {}
@@ -22,60 +21,5 @@ module Notarius
 
   def self.config name
     @configs[name]
-  end
-
-  class Secretary
-    def initialize
-      @loggers = {}
-    end
-
-    def configure config
-      if config.console
-        add(:console, $stdout)
-      else
-        delete(:console)
-      end
-
-      if config.file
-        add(config.file, config.file)
-      else
-        delete(config.file)
-      end
-    end
-
-    def info message
-      @loggers.values.each { |l| l.info message }
-    end
-
-    def warn message
-      @loggers.values.each { |l| l.warn message }
-    end
-
-    def error message
-      @loggers.values.each { |l| l.error message }
-    end
-
-    def add key, stream
-      unless @loggers.has_key? key
-        # The check below is a hack to get around Ruby's Logger class
-        # wanting to put a header in the log file. Think about writing
-        # my own logger class.
-        if !stream.respond_to?(:write) || !stream.respond_to?(:close)
-          FileUtils.touch key
-        end
-
-        logger = Logger.new stream
-        logger.level = Logger::INFO
-        logger.formatter = Formatter.new
-        @loggers[key] = logger
-      end
-    end
-    private :add
-
-    def delete key
-      logger = @loggers.delete(key)
-      logger.close rescue nil
-    end
-    private :delete
   end
 end

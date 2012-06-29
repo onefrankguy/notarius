@@ -2,7 +2,7 @@ require 'notarius/formatter'
 require 'logger'
 
 module Notarius
-  class TempSecretary
+  class Secretary
     def initialize
       @loggers = {}
     end

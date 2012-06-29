@@ -1,13 +1,13 @@
 require 'notarius/secretary'
 require 'stringio'
 
-describe Notarius::TempSecretary do
+describe Notarius::Secretary do
   describe 'logging' do
     let(:logger) { StringIO.new }
     let(:secretary) do
       c = Notarius::Config.new
       c.file = logger
-      s = Notarius::TempSecretary.new
+      s = Notarius::Secretary.new
       s.configure c
       s
     end
@@ -38,7 +38,7 @@ describe Notarius::TempSecretary do
       io1 = StringIO.new
       io2 = StringIO.new
 
-      secretary = Notarius::TempSecretary.new
+      secretary = Notarius::Secretary.new
 
       config = Notarius::Config.new
       config.console = io1
@@ -53,7 +53,7 @@ describe Notarius::TempSecretary do
     it 'defaults console to stdout' do
       config = Notarius::Config.new
       config.console = true
-      secretary = Notarius::TempSecretary.new
+      secretary = Notarius::Secretary.new
 
       output = StringIO.new
       stdout = $stdout
@@ -76,7 +76,7 @@ describe Notarius::TempSecretary do
       config1.console = io1
       config1.file = io2
 
-      secretary = Notarius::TempSecretary.new
+      secretary = Notarius::Secretary.new
       secretary.configure config1
       secretary.info 'noodles'
       io1.string.should match(/^INFO \[[^\]]+\] noodles\n$/)
@@ -92,7 +92,7 @@ describe Notarius::TempSecretary do
       config = Notarius::Config.new
       config.console = StringIO.new 
 
-      secretary = Notarius::TempSecretary.new
+      secretary = Notarius::Secretary.new
       secretary.configure config
       secretary.info 'noodles'
       config.console.string.should match(/^INFO \[[^\]]+\] noodles\n$/)
