@@ -3,11 +3,19 @@ require 'logger'
 
 module Notarius
   class Secretary
+    ##
+    # Create a new instance of Secretary.
+    # @return [Secretary]
+
     def initialize
       @loggers = {}
       @messages = {}
     end
 
+    ##
+    # Configure a Secretary.
+    # @param [Config] config the configuration for this Secretary
+    
     def configure config
       if config.console
         add :console, logger(config.console, $stdout)
@@ -21,13 +29,25 @@ module Notarius
       end
     end
 
+    ##
+    # Log an informative message. Informative messages show up the log
+    # with "INFO" at the start of the line.
+
     def info message
       log Logger::INFO, message
     end
 
+    ##
+    # Log a warning message. Warning messages show up in the log with
+    # "WARN" at the start of the line.
+
     def warn message
       log Logger::WARN, message
     end
+
+    ##
+    # Log an error message. Error messages show up in the log with
+    # "ERROR" at the start of the line.
 
     def error message
       log Logger::ERROR, message
