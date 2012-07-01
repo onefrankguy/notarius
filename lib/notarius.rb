@@ -35,7 +35,7 @@ module Notarius
 
   ##
   # Validate and return a config with the given name.
-  # @raise [Exception] configured file is already being logged to
+  # @raise [Exception] when file is already being logged to
   # @return [Config, nil] matching config or +nil+ if none found
 
   def self.config name
