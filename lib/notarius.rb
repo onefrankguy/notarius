@@ -35,10 +35,20 @@ module Notarius
 
   ##
   # Validate and return a config with the given name.
-  # @raise [Exception] when file is already being logged to
   # @return [Config, nil] matching config or +nil+ if none found
+  # @see Notarius.validate
 
   def self.config name
+    validate name
+    @configs[name]
+  end
+
+  ##
+  # Validate a config.
+  # @param [String] name name of config to validate
+  # @raise [Exception] when file is already being logged to
+
+  def self.validate name
     config = @configs[name]
     if config
       @configs.each do |n, c|
@@ -50,8 +60,8 @@ EOF
         end
       end
     end
-    config
   end
+  private_class_method :validate
 
   ##
   # Convert an +Object+ to a +String+ that can be used as a namespace.
