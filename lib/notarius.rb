@@ -6,9 +6,11 @@ module Notarius
   @configs = {}
 
   ##
-  # Configure logging for the named module. A +Notarius::Config+ object
-  # is passed to the block so you can set logging attributes. Eg:
+  # Configure logging for the named module.
   #
+  # @yieldparam log [Config]
+  #
+  # @example
   #   Notarius.configure 'BIG' do |log|
   #     log.console = true
   #     log.file = '/var/log/notarius/big.log'
@@ -31,7 +33,8 @@ module Notarius
 
   ##
   # Validate and return a config with the given name.
-  # @return [Config] the matching config or +nil+
+  # @raise [Exception] configured file is already being logged to
+  # @return [Config, nil] matching config or +nil+ if none found
 
   def self.config name
     config = @configs[name]
