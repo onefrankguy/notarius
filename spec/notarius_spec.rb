@@ -11,10 +11,7 @@ describe Notarius do
         yield files.map { |file| file.path } if block_given?
       end
     ensure
-      files.each do |file|
-        file.close
-        file.unlink
-      end
+      files.each { |file| file.close! }
     end
   end
 
