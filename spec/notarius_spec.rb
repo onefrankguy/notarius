@@ -1,5 +1,4 @@
 require 'notarius'
-require 'stringio'
 
 describe Notarius do
   before :each do
