@@ -99,10 +99,10 @@ goes for tabs. Log statements shouldn't read like poetry. Exceptions are
 the exceptional exception to this rule.
 
 Messages are truncated so the total length of a line is less than 140
-characters. This makes them easy to tweet. Tweetablility is important,
-because it's what the people reading logs at 3am do when they find
-something hilarious. If you're writing non-tweetable messages, your logs
-are too verbose.
+characters. This makes them easy to [tweet][]. Tweetablility is
+important, because it's what the people reading logs at 3am do when they
+find something hilarious. If you're writing non-tweetable messages, your
+logs are too verbose.
 
 To make it easy to grep for warnings and errors, messages are output as
 "level [timestamp] message". You can do `cat notarius.log | grep ^WARN`
@@ -146,3 +146,4 @@ Notarius is available under an [MIT-style][] license. See the
 [Logula]: https://github.com/codahale/logula "Logula is a Scala library which provides a sane log output format and easy-to-use mixin for adding logging to your code."
 [MIT-style]:  http://opensource.org/license/MIT "Open Source Initiative OSI - The MIT License"
 [ISO 8601]: http://en.wikipedia.org/wiki/ISO_8601 "An international standard covering the exchange of date and time related data."
+[tweet]: https://twitter.com/ "Twitter"
