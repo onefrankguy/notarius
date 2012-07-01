@@ -1,107 +1,131 @@
 require 'notarius'
+require 'tempfile'
 
 describe Notarius do
+  def tempfiles *prefixes 
+    files = prefixes.map { |prefix| Tempfile.new prefix }
+    begin
+      if files.size == 1 
+        yield files.first.path if block_given?
+      else
+        yield files.map { |file| file.path } if block_given?
+      end
+    ensure
+      files.each do |file|
+        file.close
+        file.unlink
+      end
+    end
+  end
+
   before :each do
-    Dir['*.log'].each { |log| FileUtils.rm log }
     Notarius.instance_variable_set :@configs, {}
   end
 
-  after :all do
-    Dir['*.log'].each { |log| FileUtils.rm log }
-  end
-
   it 'can log to a file' do
-    Notarius.configure('BIG') { |l| l.file = 'player.log' }
-    player = Class.new do
-      include Notarius::BIG
-      def initialize
-        log.info 'New player created!'
+    tempfiles 'player' do |player_log|
+      Notarius.configure('BIG') { |l| l.file = player_log }
+      player = Class.new do
+        include Notarius::BIG
+        def initialize
+          log.info 'New player created!'
+        end
       end
+      player.new
+      File.read(player_log).should include('New player created!')
     end
-    player.new
-    File.read('player.log').should include('New player created!')
   end
 
   it 'allows namespaces to be overwritten' do
-    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+    tempfiles('player', 'monster') do |player_log, monster_log|
+      Notarius.configure('BIG') { |l| l.file = player_log }
 
-    player = Class.new do
-      include Notarius::BIG
-      def run message
-        log.info message
+      player = Class.new do
+        include Notarius::BIG
+        def run message
+          log.info message
+        end
       end
+      p = player.new
+
+      p.run 'Player is running.'
+      File.read(player_log).should include('Player is running.')
+
+      Notarius.configure('BIG') { |l| l.file = monster_log }
+      p.run 'Player is still running.'
+      File.read(monster_log).should include('Player is still running.')
     end
-    p = player.new
-
-    p.run 'Player is running.'
-    File.read('player.log').should include('Player is running.')
-
-    Notarius.configure('BIG') { |l| l.file = 'monster.log' }
-    p.run 'Player is still running.'
-    File.read('monster.log').should include('Player is still running.')
   end
 
   it 'allows for unique namespaces' do
-    Notarius.configure('Player') { |l| l.file = 'player.log' }
-    player = Class.new do 
-      include Notarius::Player
-      def initialize
-        log.info 'New player created!'
+    tempfiles('player', 'monster') do |player_log, monster_log|
+      Notarius.configure('Player') { |l| l.file = player_log }
+      player = Class.new do 
+        include Notarius::Player
+        def initialize
+          log.info 'New player created!'
+        end
       end
-    end
 
-    Notarius.configure('Monster') { |l| l.file = 'monster.log' }
-    monster = Class.new do
-      include Notarius::Monster
-      def initialize
-        log.info 'New monster created!'
+      Notarius.configure('Monster') { |l| l.file = monster_log }
+      monster = Class.new do
+        include Notarius::Monster
+        def initialize
+          log.info 'New monster created!'
+        end
       end
-    end
 
-    monster.new
-    player.new
-    File.read('monster.log').should_not include('New player created!')
+      monster.new
+      player.new
+      File.read(monster_log).should_not include('New player created!')
+    end
   end
 
   it 'allows info to be logged' do
-    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+    tempfiles 'player' do |player_log|
+      Notarius.configure('BIG') { |l| l.file = player_log }
 
-    player = Class.new do
-      include Notarius::BIG
-      def initialize
-        log.info 'Info!'
+      player = Class.new do
+        include Notarius::BIG
+        def initialize
+          log.info 'Info!'
+        end
       end
-    end
-    player.new
+      player.new
 
-    File.read('player.log').should include('Info!')
+      File.read(player_log).should include('Info!')
+    end
   end
 
   it 'allows warnings to be logged' do
-    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+    tempfiles 'player' do |player_log|
+      Notarius.configure('BIG') { |l| l.file = player_log }
 
-    player = Class.new do
-      include Notarius::BIG
-      def initialize
-        log.warn 'Warning!'
+      player = Class.new do
+        include Notarius::BIG
+        def initialize
+          log.warn 'Warning!'
+        end
       end
-    end
-    player.new
+      player.new
 
-    File.read('player.log').should include('Warning!')
+      File.read(player_log).should include('Warning!')
+    end
   end
 
   it 'allows errors to be logged' do
-    Notarius.configure('BIG') { |l| l.file = 'player.log' }
+    tempfiles 'player' do |player_log|
+      Notarius.configure('BIG') { |l| l.file = player_log }
 
-    player = Class.new do
-      include Notarius::BIG
-      def initialize
-        log.error 'Error!'
+      player = Class.new do
+        include Notarius::BIG
+        def initialize
+          log.error 'Error!'
+        end
       end
-    end
-    player.new
+      player.new
 
-    File.read('player.log').should include('Error!')
+      File.read(player_log).should include('Error!')
+    end
   end
 end 
