@@ -13,6 +13,10 @@ describe Notarius do
     end
   end
 
+  it 'has a semantic version number' do
+    Notarius::VERSION.should match(/^\d+\.\d+\.\d+$/)
+  end
+
   it 'can log to a file' do
     tempfiles 'player' do |player_log|
       Notarius.configure('BIG') { |l| l.file = player_log }

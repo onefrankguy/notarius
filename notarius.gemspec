@@ -1,6 +1,10 @@
+$LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
+
+require 'notarius/version'
+
 Gem::Specification.new do |s|
   s.name = 'notarius'
-  s.version = '0.1.0'
+  s.version = Notarius::VERSION
   s.required_ruby_version = '~> 1.9'
 
   s.summary = 'Notarius is a logging library with opinions.'

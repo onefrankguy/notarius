@@ -1,6 +1,7 @@
 require 'notarius/secretary'
 require 'notarius/config'
 require 'notarius/exception'
+require 'notarius/version'
 
 module Notarius
   @configs = {}
