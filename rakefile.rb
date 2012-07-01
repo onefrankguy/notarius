@@ -1,6 +1,7 @@
 require 'rake/clean'
 require 'rspec/core/rake_task'
 
+CLEAN.include 'doc'
 CLEAN.include 'coverage'
 CLEAN.include 'notarius-*.gem'
 CLEAN.include '.yardoc'
