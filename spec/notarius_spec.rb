@@ -74,4 +74,20 @@ describe Notarius do
       File.read(monster_log).should_not include('New player created!')
     end
   end
+
+  it 'throws an error if separate namespaces log to the same file' do
+    tempfiles 'log' do |log|
+      Notarius.configure('Player') { |l| l.file = log }
+      Notarius.configure('Monster') { |l| l.file = log }
+
+      monster = Class.new do
+        include Notarius::Monster
+        def initialize
+          log.info 'New monster created!'
+        end
+      end
+
+      expect { monster.new }.to raise_error(Notarius::Exception)
+    end
+  end
 end 

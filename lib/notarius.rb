@@ -1,5 +1,6 @@
 require 'notarius/secretary'
 require 'notarius/config'
+require 'notarius/exception'
 
 module Notarius
   @configs = {}
@@ -20,6 +21,17 @@ module Notarius
   end
 
   def self.config name
-    @configs[name]
+    config = @configs[name]
+    if config
+      @configs.each do |n, c|
+        if n != name && c.file && c.file == config.file
+          message = <<EOF
+Notarius::#{name} logs to the same file as Notarius::#{n}.
+EOF
+          raise Notarius::Exception.new message
+        end
+      end
+    end
+    config
   end
 end
