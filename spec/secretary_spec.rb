@@ -33,7 +33,7 @@ describe Notarius::Secretary do
     end
   end
 
-  describe 'configure' do
+  describe '#configure' do
     it 'logs to multiple outputs' do
       io1 = StringIO.new
       io2 = StringIO.new
