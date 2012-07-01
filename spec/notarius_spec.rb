@@ -18,10 +18,6 @@ describe Notarius do
     end
   end
 
-  before :each do
-    Notarius.instance_variable_set :@configs, {}
-  end
-
   it 'can log to a file' do
     tempfiles 'player' do |player_log|
       Notarius.configure('BIG') { |l| l.file = player_log }
