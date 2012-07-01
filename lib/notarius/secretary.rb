@@ -22,25 +22,26 @@ module Notarius
     end
 
     def info message
-      if message != @last_message
-        @loggers.values.each { |l| l.info message }
-      end
-      @last_message = message
+      log Logger::INFO, message
     end
 
     def warn message
-      if message != @last_message
-        @loggers.values.each { |l| l.warn message }
-      end
-      @last_message = message
+      log Logger::WARN, message
     end
 
     def error message
-      if message != @last_message
-        @loggers.values.each { |l| l.error message }
-      end
-      @last_message = message
+      log Logger::ERROR, message
     end
+
+    def log severity, message
+      if message != @last_message
+        @last_message = message
+        @loggers.values.each do |l|
+          l.add(severity) { message }
+        end
+      end
+    end
+    private :log
 
     def add key, stream
       @loggers[key] = Logger.new stream
