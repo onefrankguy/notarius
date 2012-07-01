@@ -108,8 +108,9 @@ To make it easy to grep for warnings and errors, messages are output as
 "level [timestamp] message". You can do `cat notarius.log | grep ^WARN`
 and find all the warnings in a log.
 
-If the object you pass to the `info`, `warn`, and `error` methods
-responds to `:message` and `:backtrace`, you'll get output like this:
+If the object you pass to the `log.info`, `log.warn`, and `log.error`
+methods responds to `:message` and `:backtrace`, you'll get output like
+this:
 
 ```bash
 level [timestamp] message
