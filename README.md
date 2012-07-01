@@ -7,7 +7,7 @@ possible to encourage you to write short useful log messages.
 
  * Whitespace is converted to spaces.
  * Lines are truncated to 140 characters.
- * Timestamps are formatted as ISO 8601.
+ * Timestamps are formatted as [ISO 8601][].
  * Call stacks are easy to grep.
  * Duplicate messages are discarded.
 
@@ -130,7 +130,7 @@ the log are a sign that your code is broken.
 Inspiration
 -----------
 
-At lot of the Notarius philosophy was copied from [Logula][logula]. The
+At lot of the Notarius philosophy was copied from [Logula][]. The
 rest of it comes from several years watching sysadmins work, and
 realizing that programmers often make their lives more difficult than we
 intend.
@@ -140,8 +140,9 @@ Notarius tries to make things easier.
 License
 -------
 
-Notarius is available under an [MIT-style][mit] license. See the
+Notarius is available under an [MIT-style][] license. See the
 {file:LICENSE.md} document for more information.
 
-[logula]: https://github.com/codahale/logula "Logula is a Scala library which provides a sane log output format and easy-to-use mixin for adding logging to your code."
-[mit]:  http://opensource.org/license/MIT "Open Source Initiative OSI - The MIT License"
+[Logula]: https://github.com/codahale/logula "Logula is a Scala library which provides a sane log output format and easy-to-use mixin for adding logging to your code."
+[MIT-style]:  http://opensource.org/license/MIT "Open Source Initiative OSI - The MIT License"
+[ISO 8601]: http://en.wikipedia.org/wiki/ISO_8601 "An international standard covering the exchange of date and time related data."
