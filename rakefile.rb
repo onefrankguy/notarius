@@ -22,6 +22,22 @@ task :build do
   sh "gem build #{name}.gemspec"
 end
 
+desc 'Install the gem'
+task :install do
+  sh "gem install ./#{name}-#{version}.gem"
+end
+
+desc 'Uninstall the gem'
+task :uninstall do
+  sh "gem uninstall #{name}"
+end
+
 def name
   @name ||= Dir['*.gemspec'].first.split('.').first
+end
+
+def version
+  text = File.read("lib/#{name}/version.rb")
+  text = text[/^\s*VERSION\s*=\s*.*/]
+  @version ||= text.match(/.*VERSION\s*=\s*['"](.*)['"]/)[1]
 end
