@@ -1,8 +1,25 @@
 require 'time'
 
 module Notarius
+  ##
+  # Handles formatting of log messages. It's compatable with Ruby's 
+  # +Logger::Formatter+ class, but has its own opinions:
+  #
+  # * Whitespace in the message is converted to spaces.
+  # * Output is truncated to 140 characters. 
+  # * Timestamps are formatted as ISO 8601 in UTC.
+  # * Lines in call stacks are prefixed with !'s.
+  # * Any of the arguments to #call can be nil.
+
   class Formatter
+    ##
     # This is the interface Ruby's Logger class expects.
+    # @param [String] severity the severity level of the message
+    # @param [Date] timestamp the timestamp for the message
+    # @param [Object] application unused
+    # @param [Object] message responds to +:message+, +:backtrace+, or +:inspect+
+    # @return [String] formatted as "SEVERITY [timestamp] message\\n"
+
     def call severity, timestamp, application, message
       result = []
       result << format_severity(severity) if severity
