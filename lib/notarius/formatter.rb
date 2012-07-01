@@ -13,11 +13,12 @@ module Notarius
 
   class Formatter
     ##
-    # This is the interface Ruby's Logger class expects.
+    # This is the interface Ruby's +Logger+ class expects.
     # @param [String] severity the severity level of the message
     # @param [Date] timestamp the timestamp for the message
     # @param [Object] application unused
-    # @param [String, #message, #backtrace, #inspect] message the message to log
+    # @param [String, #message, #backtrace, #inspect] message
+    #   the message to log
     # @return [String] formatted as "SEVERITY [timestamp] message\\n"
 
     def call severity, timestamp, application, message
