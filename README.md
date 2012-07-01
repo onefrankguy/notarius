@@ -130,10 +130,10 @@ the log are a sign that your code is broken.
 Inspiration
 -----------
 
-At lot of the Notarius philosophy was stolen from [Logula][logula]. The
+At lot of the Notarius philosophy was copied from [Logula][logula]. The
 rest of it comes from several years watching sysadmins work, and
-realizing that programmers often make their lives for more difficult
-than we intend.
+realizing that programmers often make their lives more difficult than we
+intend.
 
 Notarius tries to make things easier.
 
