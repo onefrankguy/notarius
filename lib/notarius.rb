@@ -5,6 +5,15 @@ require 'notarius/exception'
 module Notarius
   @configs = {}
 
+  ##
+  # Configures logging for the named module. A +Notarius::Config+ object
+  # is passed to the block so you can set logging attributes. Eg:
+  #
+  #   Notarius.configure 'BIG' do |log|
+  #     log.console = true
+  #     log.file = '/var/log/notarius/big.log'
+  #   end
+
   def self.configure name, &block
     @configs[name] = Config.new if @configs[name].nil?
     @configs[name].instance_eval(&block) if block_given?
@@ -19,6 +28,9 @@ module Notarius
     end
     self.const_set name, mod
   end
+
+  ##
+  # Validates and returns a config with the given name.
 
   def self.config name
     config = @configs[name]
