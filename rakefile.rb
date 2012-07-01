@@ -3,7 +3,7 @@ require 'rspec/core/rake_task'
 
 CLEAN.include 'doc'
 CLEAN.include 'coverage'
-CLEAN.include 'notarius-*.gem'
+CLEAN.include '*.gem'
 CLEAN.include '.yardoc'
 
 desc 'Run specs.'
@@ -19,5 +19,9 @@ end
 
 desc 'Build the gem.'
 task :build do
-  sh 'gem build notarius.gemspec'
+  sh "gem build #{name}.gemspec"
+end
+
+def name
+  @name ||= Dir['*.gemspec'].first.split('.').first
 end
