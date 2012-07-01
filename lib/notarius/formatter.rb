@@ -17,7 +17,7 @@ module Notarius
     # @param [String] severity the severity level of the message
     # @param [Date] timestamp the timestamp for the message
     # @param [Object] application unused
-    # @param [Object] message responds to +:message+, +:backtrace+, or +:inspect+
+    # @param [String, #message, #backtrace, #inspect] message the message to log
     # @return [String] formatted as "SEVERITY [timestamp] message\\n"
 
     def call severity, timestamp, application, message
