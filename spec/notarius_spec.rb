@@ -23,7 +23,8 @@ describe Notarius do
         end
       end
       player.new
-      File.read(player_log).should include('New player created!')
+      lines = File.read(player_log).split("\n")
+      lines[0].should end_with('New player created!')
     end
   end
 
@@ -40,11 +41,13 @@ describe Notarius do
       p = player.new
 
       p.run 'Player is running.'
-      File.read(player_log).should include('Player is running.')
+      lines = File.read(player_log).split("\n")
+      lines[0].should end_with('Player is running.')
 
       Notarius.configure('BIG') { |l| l.file = monster_log }
       p.run 'Player is still running.'
-      File.read(monster_log).should include('Player is still running.')
+      lines = File.read(monster_log).split("\n")
+      lines[0].should end_with('Player is still running.')
     end
   end
 
