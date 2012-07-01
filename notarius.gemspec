@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version = '0.1.0'
   s.required_ruby_version = '~> 1.9'
 
-  s.summary = 'Notarius is a logging library opinions.'
+  s.summary = 'Notarius is a logging library with opinions.'
   s.description = <<EOF
 Notarius is a logging library with opinions. The word "notarius" is
 Latin for "shorthand writer". To this end, Notarius does everything
