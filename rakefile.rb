@@ -3,6 +3,7 @@ require 'rspec/core/rake_task'
 
 CLEAN.include 'coverage'
 CLEAN.include 'notarius-*.gem'
+CLEAN.include '.yardoc'
 
 desc 'Run specs.'
 task :default => :spec
