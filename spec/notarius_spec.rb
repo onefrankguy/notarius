@@ -94,4 +94,23 @@ describe Notarius do
       expect { monster.new }.to raise_error(Notarius::Exception)
     end
   end
-end 
+
+  describe '#configure' do
+    it 'handles lowercase namespaces gracefully' do
+      Notarius.configure 'little'
+      Notarius.const_defined?(:Little).should be_true
+    end
+
+    it 'throws an error if a namespace is empty' do
+      expect do
+        Notarius.configure ''
+      end.to raise_error(Notarius::Exception)
+    end
+
+    it 'throws an error if a namespace is nil' do
+      expect do
+        Notarius.configure nil
+      end.to raise_error(Notarius::Exception)
+    end
+  end 
+end

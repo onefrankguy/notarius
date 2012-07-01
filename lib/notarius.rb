@@ -18,6 +18,7 @@ module Notarius
   #   end
 
   def self.configure name, &block
+    name = namespace name
     @configs[name] = Config.new if @configs[name].nil?
     @configs[name].instance_eval(&block) if block_given?
     return if self.const_defined? name
@@ -51,4 +52,21 @@ EOF
     end
     config
   end
+
+  ##
+  # Convert an +Object+ to a +String+ that can be used as a namespace.
+  # This has to generate something that matches Ruby's idea of a
+  # constant.
+  # @raise [Exception] when +name+ is empty
+  # @param [#to_s] name name of the namespace
+  # @return [String] converted namespace
+
+  def self.namespace name
+    name = name.to_s
+    if name.empty?
+      raise Notarius::Exception.new "namespaces can't be empty"
+    end
+    name[0, 1].upcase + name[1, name.size]
+  end
+  private_class_method :namespace
 end
