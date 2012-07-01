@@ -63,7 +63,7 @@ Usage
 Using Notarius is simple. Include the `Notarius::NAME` module (where
 NAME is the string you passed to the `configure` method) and call
 `log.info`, `log.warn`, or `log.error`. You can log anything that
-responds to an `:inspect` message.
+responds to `:message`, `:backtrace`, or `:inspect`.
 
 ```ruby
 class Player 
@@ -109,8 +109,7 @@ To make it easy to grep for warnings and errors, messages are output as
 and find all the warnings in a log.
 
 If the object you pass to the `info`, `warn`, and `error` methods
-responds to `:message` and `:backtrace` messages, you'll get output
-like this:
+responds to `:message` and `:backtrace`, you'll get output like this:
 
 ```bash
 level [timestamp] message
