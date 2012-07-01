@@ -28,18 +28,18 @@ describe Notarius do
 
     player = Class.new do
       include Notarius::BIG
-      def run 
-        log.info 'Player is running.'
+      def run message
+        log.info message
       end
     end
     p = player.new
 
-    p.run
+    p.run 'Player is running.'
     File.read('player.log').should include('Player is running.')
 
     Notarius.configure('BIG') { |l| l.file = 'monster.log' }
-    p.run
-    File.read('monster.log').should include('Player is running.')
+    p.run 'Player is still running.'
+    File.read('monster.log').should include('Player is still running.')
   end
 
   it 'allows for unique namespaces' do

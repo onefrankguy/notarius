@@ -31,6 +31,12 @@ describe Notarius::Secretary do
       secretary.error 'error message'
       logger.string.should match(/^ERROR \[[^\]]+\] error message\n$/)
     end
+
+    it 'skips duplicate messages' do
+      secretary.error 'same message'
+      secretary.info 'same message'
+      logger.string.should_not match(/^INFO \[[^\]]+\] same message\n$/)
+    end
   end
 
   describe 'configure' do

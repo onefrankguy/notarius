@@ -5,6 +5,7 @@ module Notarius
   class Secretary
     def initialize
       @loggers = {}
+      @last_message = nil
     end
 
     def configure config
@@ -21,15 +22,24 @@ module Notarius
     end
 
     def info message
-      @loggers.values.each { |l| l.info message }
+      if message != @last_message
+        @loggers.values.each { |l| l.info message }
+      end
+      @last_message = message
     end
 
     def warn message
-      @loggers.values.each { |l| l.warn message }
+      if message != @last_message
+        @loggers.values.each { |l| l.warn message }
+      end
+      @last_message = message
     end
 
     def error message
-      @loggers.values.each { |l| l.error message }
+      if message != @last_message
+        @loggers.values.each { |l| l.error message }
+      end
+      @last_message = message
     end
 
     def add key, stream
