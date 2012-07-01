@@ -34,7 +34,7 @@ module Notarius
   end
 
   ##
-  # Validate and return a config with the given name.
+  # Return a config with the given name. Validates the config first.
   # @return [Config, nil] matching config or +nil+ if none found
   # @see Notarius.validate
 
@@ -44,7 +44,7 @@ module Notarius
   end
 
   ##
-  # Validate a config.
+  # Validate a config with the given name.
   # @param [String] name name of config to validate
   # @raise [Exception] when file is already being logged to
 
