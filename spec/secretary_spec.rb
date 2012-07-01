@@ -31,12 +31,6 @@ describe Notarius::Secretary do
       secretary.error 'error message'
       logger.string.should match(/^ERROR \[[^\]]+\] error message\n$/)
     end
-
-    it 'skips duplicate messages' do
-      secretary.error 'same message'
-      secretary.info 'same message'
-      logger.string.should_not match(/^INFO \[[^\]]+\] same message\n$/)
-    end
   end
 
   describe 'configure' do
@@ -107,5 +101,28 @@ describe Notarius::Secretary do
       secretary.info 'pasta'
       config.console.should be_closed
     end
+  end
+
+  it 'skips duplicate messages per logger' do
+      io1 = StringIO.new
+      io2 = StringIO.new
+
+      secretary = Notarius::Secretary.new
+
+      config1 = Notarius::Config.new
+      config1.console = io1
+      secretary.configure config1
+
+      secretary.error 'same message'
+
+      config2 = Notarius::Config.new
+      config2.console = io1
+      config2.file = io2
+      secretary.configure config2
+
+      secretary.info 'same message'
+
+      io1.string.should_not match(/^INFO \[[^\]]+\] same message\n$/)
+      io2.string.should match(/^INFO \[[^\]]+\] same message\n$/)
   end
 end

@@ -5,7 +5,7 @@ module Notarius
   class Secretary
     def initialize
       @loggers = {}
-      @last_message = nil
+      @messages = {}
     end
 
     def configure config
@@ -34,10 +34,10 @@ module Notarius
     end
 
     def log severity, message
-      if message != @last_message
-        @last_message = message
-        @loggers.values.each do |l|
-          l.add(severity) { message }
+      @loggers.each do |key, logger|
+        if message != @messages[key]
+          @messages[key] = message
+          logger.add(severity) { message }
         end
       end
     end
