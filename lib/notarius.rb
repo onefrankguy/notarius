@@ -31,6 +31,7 @@ module Notarius
 
   ##
   # Validates and returns a config with the given name.
+  # @return [Config] the matching config or +nil+
 
   def self.config name
     config = @configs[name]
