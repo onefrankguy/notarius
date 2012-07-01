@@ -5,11 +5,9 @@ describe Notarius do
   def tempfiles *prefixes 
     files = prefixes.map { |prefix| Tempfile.new prefix }
     begin
-      if files.size == 1 
-        yield files.first.path if block_given?
-      else
-        yield files.map { |file| file.path } if block_given?
-      end
+      paths = files.map { |file| file.path }
+      paths = paths.first if paths.size == 1
+      yield paths if block_given?
     ensure
       files.each { |file| file.close! }
     end
