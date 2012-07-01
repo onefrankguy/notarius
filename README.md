@@ -54,7 +54,8 @@ end
 ```
 
 Notarius is fine with you calling the `configure` method multiple times.
-Set up defaults when your program starts and change them later.
+This means you can set up defaults when your program starts and change
+them later.
 
 Usage
 -----
@@ -62,7 +63,7 @@ Usage
 Using Notarius is simple. Include the `Notarius::NAME` module (where
 NAME is the string you passed to the `configure` method) and call
 `log.info`, `log.warn`, or `log.error`. You can log anything that
-responds to a `:to_s` message.
+responds to an `:inspect` message.
 
 ```ruby
 class Player 
