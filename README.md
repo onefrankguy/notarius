@@ -143,8 +143,5 @@ License
 Notarius is available under an [MIT-style][mit] license. See the
 {file:LICENSE.md} document for more information.
 
-[logula]: https://github.com/codahale/logula "Logula is a Scala library
-which provides a sane log output format and easy-to-use mixin for adding
-logging to your code."
-
+[logula]: https://github.com/codahale/logula "Logula is a Scala library which provides a sane log output format and easy-to-use mixin for adding logging to your code."
 [mit]:  http://opensource.org/license/MIT "Open Source Initiative OSI - The MIT License"
