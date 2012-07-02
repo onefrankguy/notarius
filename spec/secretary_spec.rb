@@ -27,12 +27,6 @@ describe Notarius::Secretary do
         secretary.send(level.to_sym, message)
         logger.string.should match_message(level, message)
       end
-
-      it "can log #{level} blocks" do
-        message = "block #{level} message"
-        secretary.send(level.to_sym) { message }
-        logger.string.should match_message(level, message)
-      end
     end
   end
 

@@ -33,28 +33,27 @@ module Notarius
     # Log an informative message. Informative messages show up the log
     # with "INFO" at the start of the line.
 
-    def info *args, &block 
-      log Logger::INFO, *args, &block 
+    def info message
+      log Logger::INFO, message
     end
 
     ##
     # Log a warning message. Warning messages show up in the log with
     # "WARN" at the start of the line.
 
-    def warn *args, &block 
-      log Logger::WARN, *args, &block 
+    def warn message
+      log Logger::WARN, message
     end
 
     ##
     # Log an error message. Error messages show up in the log with
     # "ERROR" at the start of the line.
 
-    def error *args, &block 
-      log Logger::ERROR, *args, &block 
+    def error message
+      log Logger::ERROR, message
     end
 
-    def log severity, *args, &block 
-      message = args.first || block && block.call
+    def log severity, message
       @loggers.each do |key, logger|
         if message != @messages[key]
           @messages[key] = message
