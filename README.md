@@ -3,7 +3,7 @@ Notarius
 
 Notarius is a logging library with opinions. The word "notarius" is
 Latin for "shorthand writer". To this end, Notarius does everything
-possible to encourage you to write short useful log messages. 
+possible to encourage you to write short useful log messages.
 
  * Whitespace is converted to spaces.
  * Lines are truncated to 140 characters.
@@ -66,7 +66,7 @@ NAME is the string you passed to the `configure` method) and call
 responds to `:message`, `:backtrace`, or `:inspect`.
 
 ```ruby
-class Player 
+class Player
   include Notarius::BIG
 
   def move direction
@@ -116,7 +116,7 @@ this:
 level [timestamp] message
 ! backtrace
 ! backtrace
-! backtrace 
+! backtrace
 ```
 
 This makes it easy to log exceptions. More importantly, it makes it easy
