@@ -3,7 +3,7 @@ require 'stringio'
 
 describe Notarius::Secretary do
   def match_message level, message
-    match(/^#{level} \[[^\]]+\] #{message}\n$/)
+    match(/^#{level.upcase} \[[^\]]+\] #{message}\n$/)
   end
 
   describe 'logging' do
@@ -21,34 +21,18 @@ describe Notarius::Secretary do
       logger.rewind
     end
 
-    it 'can log info messages' do
-      secretary.info 'info message'
-      logger.string.should match_message(:INFO, 'info message')
-    end
+    %w{info warn error}.each do |level|
+      it "can log #{level} messages" do
+        message = "#{level} message"
+        secretary.send(level.to_sym, message)
+        logger.string.should match_message(level, message)
+      end
 
-    it 'can log warning messages' do
-      secretary.warn 'warning message'
-      logger.string.should match_message(:WARN, 'warning message')
-    end
-
-    it 'can log error messages' do
-      secretary.error 'error message'
-      logger.string.should match_message(:ERROR, 'error message')
-    end
-
-    it 'can log info blocks' do
-      secretary.info { 'block info message' }
-      logger.string.should match_message(:INFO, 'block info message')
-    end
-
-    it 'can log warning blocks' do
-      secretary.warn { 'block warning message' }
-      logger.string.should match_message(:WARN, 'block warning message')
-    end
-
-    it 'can log error blocks' do
-      secretary.error { 'block error message' }
-      logger.string.should match_message(:ERROR, 'block error message')
+      it "can log #{level} blocks" do
+        message = "block #{level} message"
+        secretary.send(level.to_sym) { message }
+        logger.string.should match_message(level, message)
+      end
     end
   end
 
