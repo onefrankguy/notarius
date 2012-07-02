@@ -2,7 +2,7 @@ require 'notarius'
 require 'tempfile'
 
 describe Notarius do
-  def tempfiles *prefixes 
+  def tempfiles *prefixes
     files = prefixes.map { |prefix| Tempfile.new prefix }
     begin
       paths = files.map { |file| file.path }

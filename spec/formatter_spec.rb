@@ -55,7 +55,7 @@ describe Notarius::Formatter do
 
     it 'formats exceptions nicely' do
       exception = Exception.new('message')
-      exception.set_backtrace ['trace this line', 'back to here'] 
+      exception.set_backtrace ['trace this line', 'back to here']
       lines = formatter.call(nil, nil, nil, exception).split("\n")
       lines[0].should == 'message'
       lines[1].should == '! trace this line'

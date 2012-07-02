@@ -59,7 +59,7 @@ describe Notarius::Secretary do
         secretary.configure config
         secretary.info 'message'
       ensure
-        $stdout = stdout 
+        $stdout = stdout
       end
 
       output.string.should match_message(:INFO, 'message')
@@ -79,7 +79,7 @@ describe Notarius::Secretary do
       io1.string.should match_message(:INFO, 'noodles')
       io2.string.should match_message(:INFO, 'noodles')
 
-      secretary.configure Notarius::Config.new 
+      secretary.configure Notarius::Config.new
       secretary.info 'pasta'
       io1.string.should_not match_message(:INFO, 'pasta')
       io2.string.should_not match_message(:INFO, 'pasta')
@@ -87,14 +87,14 @@ describe Notarius::Secretary do
 
     it 'closes a logger when it removes it' do
       config = Notarius::Config.new
-      config.console = StringIO.new 
+      config.console = StringIO.new
 
       secretary = Notarius::Secretary.new
       secretary.configure config
       secretary.info 'noodles'
       config.console.string.should match_message(:INFO, 'noodles')
 
-      secretary.configure Notarius::Config.new 
+      secretary.configure Notarius::Config.new
       secretary.info 'pasta'
       config.console.should be_closed
     end

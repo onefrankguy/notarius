@@ -14,7 +14,7 @@ describe Notarius::Config do
   it 'lets you configure a console' do
     config.should respond_to(:console=)
   end
-  
+
   it 'lets you configure a file' do
     config.should respond_to(:file=)
   end
