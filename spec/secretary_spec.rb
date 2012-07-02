@@ -35,6 +35,21 @@ describe Notarius::Secretary do
       secretary.error 'error message'
       logger.string.should match_message(:ERROR, 'error message')
     end
+
+    it 'can log info blocks' do
+      secretary.info { 'block info message' }
+      logger.string.should match_message(:INFO, 'block info message')
+    end
+
+    it 'can log warning blocks' do
+      secretary.warn { 'block warning message' }
+      logger.string.should match_message(:WARN, 'block warning message')
+    end
+
+    it 'can log error blocks' do
+      secretary.error { 'block error message' }
+      logger.string.should match_message(:ERROR, 'block error message')
+    end
   end
 
   describe '#configure' do
