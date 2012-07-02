@@ -2,6 +2,10 @@ require 'notarius/secretary'
 require 'stringio'
 
 describe Notarius::Secretary do
+  def match_message level, message
+    match(/^#{level} \[[^\]]+\] #{message}\n$/)
+  end
+
   describe 'logging' do
     let(:logger) { StringIO.new }
     let(:secretary) do
@@ -19,17 +23,17 @@ describe Notarius::Secretary do
 
     it 'can log info messages' do
       secretary.info 'info message'
-      logger.string.should match(/^INFO \[[^\]]+\] info message\n$/)
+      logger.string.should match_message(:INFO, 'info message')
     end
 
     it 'can log warning messages' do
       secretary.warn 'warning message'
-      logger.string.should match(/^WARN \[[^\]]+\] warning message\n$/)
+      logger.string.should match_message(:WARN, 'warning message')
     end
 
     it 'can log error messages' do
       secretary.error 'error message'
-      logger.string.should match(/^ERROR \[[^\]]+\] error message\n$/)
+      logger.string.should match_message(:ERROR, 'error message')
     end
   end
 
@@ -46,8 +50,8 @@ describe Notarius::Secretary do
       secretary.configure config
 
       secretary.info 'info message'
-      io1.string.should match(/^INFO \[[^\]]+\] info message\n$/)
-      io2.string.should match(/^INFO \[[^\]]+\] info message\n$/)
+      io1.string.should match_message(:INFO, 'info message')
+      io2.string.should match_message(:INFO, 'info message')
     end
 
     it 'defaults console to stdout' do
@@ -65,7 +69,7 @@ describe Notarius::Secretary do
         $stdout = stdout 
       end
 
-      output.string.should match(/^INFO \[[^\]]+\] message\n$/)
+      output.string.should match_message(:INFO, 'message')
     end
 
     it 'removes a logger when no longer referenced' do
@@ -79,13 +83,13 @@ describe Notarius::Secretary do
       secretary = Notarius::Secretary.new
       secretary.configure config1
       secretary.info 'noodles'
-      io1.string.should match(/^INFO \[[^\]]+\] noodles\n$/)
-      io2.string.should match(/^INFO \[[^\]]+\] noodles\n$/)
+      io1.string.should match_message(:INFO, 'noodles')
+      io2.string.should match_message(:INFO, 'noodles')
 
       secretary.configure Notarius::Config.new 
       secretary.info 'pasta'
-      io1.string.should_not match(/^INFO \[[^\]]+\] pasta\n$/)
-      io2.string.should_not match(/^INFO \[[^\]]+\] pasta\n$/)
+      io1.string.should_not match_message(:INFO, 'pasta')
+      io2.string.should_not match_message(:INFO, 'pasta')
     end
 
     it 'closes a logger when it removes it' do
@@ -95,7 +99,7 @@ describe Notarius::Secretary do
       secretary = Notarius::Secretary.new
       secretary.configure config
       secretary.info 'noodles'
-      config.console.string.should match(/^INFO \[[^\]]+\] noodles\n$/)
+      config.console.string.should match_message(:INFO, 'noodles')
 
       secretary.configure Notarius::Config.new 
       secretary.info 'pasta'
@@ -122,7 +126,7 @@ describe Notarius::Secretary do
 
       secretary.info 'same message'
 
-      io1.string.should_not match(/^INFO \[[^\]]+\] same message\n$/)
-      io2.string.should match(/^INFO \[[^\]]+\] same message\n$/)
+      io1.string.should_not match_message(:INFO, 'same message')
+      io2.string.should match_message(:INFO, 'same message')
   end
 end
