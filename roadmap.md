@@ -36,7 +36,8 @@ duodecimo
 ---------
 
 Syslog support, both local and remote. Ability to specify stream (STDOUT
-or STDERR) when logging to console.
+or STDERR) when logging to console. Handle internationalization (multi
+byte log messages) nicely.
 
 [book sizes]: http://en.wikipedia.org/wiki/Book_size "Book size on Wikipedia"
 [git flow]: http://nvie.com/posts/a-successful-git-branching-model/ "A successful Git branching model >> nvie.com"
