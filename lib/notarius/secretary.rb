@@ -15,7 +15,7 @@ module Notarius
     ##
     # Configure a Secretary.
     # @param [Config] config the configuration for this Secretary
-    
+
     def configure config
       if config.console
         add :console, logger(config.console, $stdout)

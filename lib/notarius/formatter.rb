@@ -2,11 +2,11 @@ require 'time'
 
 module Notarius
   ##
-  # Handles formatting of log messages. It's compatable with Ruby's 
+  # Handles formatting of log messages. It's compatable with Ruby's
   # +Logger::Formatter+ class, but has its own opinions:
   #
   # * Whitespace in the message is converted to spaces.
-  # * Output is truncated to 140 characters. 
+  # * Output is truncated to 140 characters.
   # * Timestamps are formatted as ISO 8601 in UTC.
   # * Lines in call stacks are prefixed with !'s.
   # * Any of the arguments to #call can be nil.
@@ -34,7 +34,7 @@ module Notarius
     end
     private :format_severity
 
-    def format_message message 
+    def format_message message
       result = []
       if message.respond_to?(:message)
         result << message.message
@@ -59,7 +59,7 @@ module Notarius
     end
     private :clean_message
 
-    def format_timestamp timestamp 
+    def format_timestamp timestamp
       timestamp.utc.iso8601
     end
     private :format_timestamp
