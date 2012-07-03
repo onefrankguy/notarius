@@ -25,7 +25,7 @@ module Notarius
 
     mod = Module.new do
       define_method :log do
-        @secretary = Secretary.new if @secretary.nil?
+        @secretary ||= Secretary.new
         @secretary.configure Notarius.config(name)
         @secretary
       end
