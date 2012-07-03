@@ -10,7 +10,9 @@ desc 'Run specs.'
 task :default => :spec
 
 desc 'Run specs.'
-RSpec::Core::RakeTask.new :spec
+RSpec::Core::RakeTask.new :spec do |t|
+  t.ruby_opts = ['-w']
+end
 
 desc 'Generate SimpleCov spec coverage.'
 RSpec::Core::RakeTask.new :coverage do |t|
