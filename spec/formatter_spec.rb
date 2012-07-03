@@ -1,7 +1,7 @@
 require 'notarius/formatter'
 
 describe Notarius::Formatter do
-  describe 'call' do
+  describe '#call' do
     let(:formatter) { Notarius::Formatter.new }
 
     it 'converts whitespace to spaces' do
