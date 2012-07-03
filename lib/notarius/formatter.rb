@@ -55,7 +55,7 @@ module Notarius
 
     def clean_message message
       message = message.inspect unless message.kind_of?(String)
-      message.gsub(/[\t\r\n\s]+/, ' ').strip
+      message.gsub(/\s+/, ' ').strip
     end
     private :clean_message
 
