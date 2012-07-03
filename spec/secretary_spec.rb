@@ -1,4 +1,5 @@
 require 'notarius/secretary'
+require 'notarius/config'
 require 'stringio'
 
 describe Notarius::Secretary do
