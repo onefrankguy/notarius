@@ -91,7 +91,7 @@ describe Notarius do
         end
       end
 
-      expect { monster.new }.to raise_error(Notarius::Exception)
+      expect { monster.new }.to raise_error(RuntimeError)
     end
   end
 
@@ -104,13 +104,13 @@ describe Notarius do
     it 'throws an error if a namespace is empty' do
       expect do
         Notarius.configure ''
-      end.to raise_error(Notarius::Exception)
+      end.to raise_error(RuntimeError)
     end
 
     it 'throws an error if a namespace is nil' do
       expect do
         Notarius.configure nil
-      end.to raise_error(Notarius::Exception)
+      end.to raise_error(RuntimeError)
     end
   end 
 end

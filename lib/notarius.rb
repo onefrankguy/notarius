@@ -1,6 +1,5 @@
 require 'notarius/secretary'
 require 'notarius/config'
-require 'notarius/exception'
 require 'notarius/version'
 
 module Notarius
@@ -46,17 +45,14 @@ module Notarius
   ##
   # Validate a config with the given name.
   # @param [String] name name of config to validate
-  # @raise [Exception] when file is already being logged to
+  # @raise [RuntimeError] when file is already being logged to
 
   def self.validate name
     config = @configs[name]
     if config
       @configs.each do |n, c|
         if n != name && c.file && c.file == config.file
-          message = <<EOF
-Notarius::#{name} logs to the same file as Notarius::#{n}.
-EOF
-          raise Notarius::Exception.new message
+          fail "Notarius::#{name} logs to the same file as Notarius::#{n}."
         end
       end
     end
@@ -67,14 +63,14 @@ EOF
   # Convert an +Object+ to a +String+ that can be used as a namespace.
   # This has to generate something that matches Ruby's idea of a
   # constant.
-  # @raise [Exception] when +name+ is empty
+  # @raise [RuntimeError] when +name+ is empty
   # @param [#to_s] name name of the namespace
   # @return [String] converted namespace
 
   def self.namespace name
     name = name.to_s
     if name.empty?
-      raise Notarius::Exception.new "namespaces can't be empty"
+      fail "namespaces can't be empty"
     end
     name[0, 1].upcase + name[1, name.size]
   end
