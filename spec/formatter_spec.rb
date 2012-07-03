@@ -37,9 +37,9 @@ describe Notarius::Formatter do
       be more than 140 characters so that Notarius can trim it
       down to something more reasonable in length.
       EOF
-      message.length.should > 140
+      message.should have_at_least(141).characters
       message = formatter.call(nil, nil, nil, message)
-      message.strip.length.should == 140
+      message.strip.should have(140).characters
     end
 
     it 'formats messages as "LEVEL [timestamp] message\n"' do
@@ -57,9 +57,8 @@ describe Notarius::Formatter do
       exception = Exception.new('message')
       exception.set_backtrace ['trace this line', 'back to here']
       lines = formatter.call(nil, nil, nil, exception).split("\n")
-      lines[0].should == 'message'
-      lines[1].should == '! trace this line'
-      lines[2].should == '! back to here'
+      results = ['message', '! trace this line', '! back to here']
+      lines.should == results
     end
 
     it 'formats objects nicely' do
@@ -99,8 +98,8 @@ describe Notarius::Formatter do
         end
       end
       lines = formatter.call(nil, nil, nil, exception.new).split("\n")
-      lines[0].should == 'message'
-      lines[1].should == '! backtrace'
+      results = ['message', '! backtrace']
+      lines.should == results
     end
   end
 end
