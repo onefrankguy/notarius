@@ -16,7 +16,7 @@ describe Notarius::Secretary do
       s
     end
 
-    before :each do
+    before do
       logger.truncate 0
       logger.rewind
     end
