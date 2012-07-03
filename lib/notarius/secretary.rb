@@ -71,7 +71,7 @@ module Notarius
 
     def delete key
       logger = @loggers.delete(key)
-      logger.close rescue nil
+      logger.close unless logger.nil?
     end
     private :delete
 
