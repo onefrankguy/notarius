@@ -21,8 +21,8 @@ quarto
 ------
 
 Clean up of YARD and RSpec documentation so it looks and feels
-consistant. Most code is documentation. Tightening of specs to reduce
-code duplication and cover more edge cases. Migration of code to private
+consistant. Most code is documented. Tightening of specs to reduce code
+duplication and cover more edge cases. Migration of code to private
 classes and methods to keep the API clean.
 
 octavo
