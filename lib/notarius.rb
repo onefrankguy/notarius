@@ -49,9 +49,9 @@ module Notarius
 
   def self.validate name
     config = @configs[name]
-    if config
+    if config && config.file
       @configs.each do |n, c|
-        if n != name && c.file && c.file == config.file
+        if n != name && c.file == config.file
           fail "Notarius::#{name} logs to the same file as Notarius::#{n}."
         end
       end
