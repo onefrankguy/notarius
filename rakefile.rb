@@ -24,19 +24,19 @@ task :build do
   sh "gem build #{name}.gemspec"
 end
 
-desc 'Install the gem'
+desc 'Install the gem.'
 task :install do
   sh "gem install ./#{name}-#{version}.gem"
 end
 
-desc 'Uninstall the gem'
+desc 'Uninstall the gem.'
 task :uninstall do
   sh "gem uninstall #{name}"
 end
 
 begin
   gem 'flog'
-  desc 'Flog the code'
+  desc 'Flog the code.'
   task :flog, [:flags] do |t, args|
     flags = args[:flags] ? "-#{args[:flags]}" : ''
     files = FileList['lib/**/*.rb'].join(' ')
