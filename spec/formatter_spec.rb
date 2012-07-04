@@ -42,6 +42,29 @@ describe Notarius::Formatter do
       message.strip.should have(140).characters
     end
 
+    it 'makes exceptions tweetable' do
+      message = <<-EOF
+This is a really, really long message that needs to
+be more than 140 characters so that Notarius can trim it
+down to something more reasonable in length.
+      EOF
+      message.should have_at_least(141).characters
+
+      backtrace = <<-EOF
+This is a really, really long backtrace that needs to
+be more than 140 characters so that Notarius can trim it
+down to something more reasonable in length.
+      EOF
+      backtrace.should have_at_least(141).characters
+
+      exception = Exception.new(message)
+      exception.set_backtrace [backtrace]
+      lines = formatter.call(nil, nil, nil, exception).split("\n")
+      message = "#{message.gsub(/\s+/, ' ')[0,137]}..."
+      backtrace = "! #{backtrace.gsub(/\s+/, ' ')[0,135]}..."
+      lines.should == [message, backtrace]
+    end
+
     it 'formats messages as "LEVEL [timestamp] message\n"' do
       timestamp = Time.parse('2012-06-25 21:17:44 -0400')
       message = formatter.call('level', timestamp, nil, 'message')

@@ -26,7 +26,7 @@ module Notarius
       result << format_severity(severity) if severity
       result << format_timestamp(timestamp) if timestamp
       result << format_message(message) if message
-      "#{make_tweetable(result.join(' '))}\n"
+      "#{result.join(' ')}\n"
     end
 
 
@@ -45,6 +45,7 @@ module Notarius
         result << backtrace.map { |line| "! #{clean_message(line)}" }
       end
       result.flatten!
+      result.map! { |line| make_tweetable(line) }
       result.join("\n")
     end
 
