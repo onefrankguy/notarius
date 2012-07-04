@@ -72,7 +72,8 @@ module Notarius
     if name.empty?
       fail "namespaces can't be empty"
     end
-    name[0, 1].upcase + name[1, name.size]
+    name[0] = name[0].capitalize
+    name
   end
   private_class_method :namespace
 end
