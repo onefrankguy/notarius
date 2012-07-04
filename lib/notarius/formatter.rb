@@ -35,12 +35,7 @@ module Notarius
     private :format_severity
 
     def format_message message
-      result = []
-      if message.respond_to?(:message)
-        result << message.message
-      else
-        result << message
-      end
+      result = [parse_message(message)]
       if message.respond_to?(:backtrace)
         backtrace = [message.backtrace]
         backtrace.flatten!
@@ -48,10 +43,15 @@ module Notarius
         result << backtrace.map { |line| "! #{clean_message(line)}" }
       end
       result.flatten!
-      result.map! { |line| clean_message(line) }
       result.join("\n")
     end
     private :format_message
+
+    def parse_message message
+      result = message.respond_to?(:message) ? message.message : message
+      clean_message(result)
+    end
+    private :parse_message
 
     def clean_message message
       message = message.inspect unless message.kind_of?(String)
