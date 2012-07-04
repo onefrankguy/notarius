@@ -24,7 +24,7 @@ module Notarius
     def call severity, timestamp, application, message
       result = []
       result << format_severity(severity) if severity
-      result << '[' + format_timestamp(timestamp) + ']' if timestamp
+      result << format_timestamp(timestamp) if timestamp
       result << format_message(message) if message
       make_tweetable(result.join(' ')) + "\n"
     end
@@ -60,7 +60,7 @@ module Notarius
     private :clean_message
 
     def format_timestamp timestamp
-      timestamp.utc.iso8601
+      "[#{timestamp.utc.iso8601}]"
     end
     private :format_timestamp
 
