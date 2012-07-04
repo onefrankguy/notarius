@@ -69,9 +69,7 @@ module Notarius
 
   def self.namespace name
     name = name.to_s
-    if name.empty?
-      fail "namespaces can't be empty"
-    end
+    fail "namespaces can't be empty" if name.empty?
     name[0] = name[0].capitalize
     name
   end
