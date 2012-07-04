@@ -29,10 +29,12 @@ module Notarius
       "#{make_tweetable(result.join(' '))}\n"
     end
 
+
+    private
+
     def format_severity severity
       severity.strip.upcase
     end
-    private :format_severity
 
     def format_message message
       result = [parse_message(message)]
@@ -45,28 +47,23 @@ module Notarius
       result.flatten!
       result.join("\n")
     end
-    private :format_message
 
     def parse_message message
       result = message.respond_to?(:message) ? message.message : message
       clean_message(result)
     end
-    private :parse_message
 
     def clean_message message
       message = message.inspect unless message.kind_of?(String)
       message.gsub(/\s+/, ' ').strip
     end
-    private :clean_message
 
     def format_timestamp timestamp
       "[#{timestamp.utc.iso8601}]"
     end
-    private :format_timestamp
 
     def make_tweetable message
       message.length > 140 ? "#{message[0, 137]}..." : message
     end
-    private :make_tweetable
   end
 end

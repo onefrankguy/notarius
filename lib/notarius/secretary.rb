@@ -53,6 +53,9 @@ module Notarius
       log Logger::ERROR, message
     end
 
+
+    private
+
     def log severity, message
       @loggers.each do |key, logger|
         if message != @messages[key]
@@ -61,28 +64,23 @@ module Notarius
         end
       end
     end
-    private :log
 
     def add key, stream
       @loggers[key] = Logger.new stream
       @loggers[key].formatter = Formatter.new
     end
-    private :add
 
     def delete key
       logger = @loggers.delete(key)
       logger.close unless logger.nil?
     end
-    private :delete
 
     def logger *args
       args.find { |arg| loggable?(arg) }
     end
-    private :logger
 
     def loggable? stream
       stream.respond_to?(:write) && stream.respond_to?(:close)
     end
-    private :loggable?
   end
 end
