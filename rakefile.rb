@@ -34,6 +34,17 @@ task :uninstall do
   sh "gem uninstall #{name}"
 end
 
+begin
+  gem 'flog'
+  desc 'Flog the code'
+  task :flog, [:flags] do |t, args|
+    flags = args[:flags] ? "-#{args[:flags]}" : ''
+    files = FileList['lib/**/*.rb'].join(' ')
+    sh "flog #{flags} #{files}"
+  end
+rescue Gem::LoadError
+end
+
 def name
   @name ||= Dir['*.gemspec'].first.split('.').first
 end
