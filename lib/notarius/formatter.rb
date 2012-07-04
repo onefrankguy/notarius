@@ -45,7 +45,7 @@ module Notarius
         backtrace = [message.backtrace]
         backtrace.flatten!
         backtrace.compact!
-        result << backtrace.map { |line| "! %s" % clean_message(line) }
+        result << backtrace.map { |line| "! #{clean_message(line)}" }
       end
       result.flatten!
       result.map! { |line| clean_message(line) }
