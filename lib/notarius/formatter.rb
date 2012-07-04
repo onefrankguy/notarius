@@ -26,7 +26,7 @@ module Notarius
       result << format_severity(severity) if severity
       result << format_timestamp(timestamp) if timestamp
       result << format_message(message) if message
-      make_tweetable(result.join(' ')) + "\n"
+      "#{make_tweetable(result.join(' '))}\n"
     end
 
     def format_severity severity
