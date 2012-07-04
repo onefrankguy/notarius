@@ -65,7 +65,7 @@ module Notarius
     private :format_timestamp
 
     def make_tweetable message
-      message.length > 140 ? message[0, 137] + '...' : message
+      message.length > 140 ? "#{message[0, 137]}..." : message
     end
     private :make_tweetable
   end
