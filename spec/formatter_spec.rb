@@ -38,7 +38,7 @@ describe Notarius::Formatter do
       down to something more reasonable in length.
       EOF
       message.should have_at_least(141).characters
-      message = formatter.call(nil, nil, nil, message)
+      message = formatter.call('INFO', nil, nil, message)
       message.strip.should have(140).characters
     end
 
@@ -59,7 +59,7 @@ describe Notarius::Formatter do
 
       exception = Exception.new(message)
       exception.set_backtrace [backtrace]
-      lines = formatter.call(nil, nil, nil, exception).split("\n")
+      lines = formatter.call('INFO', nil, nil, exception).split("\n")
       lines.each { |line| line.should have(140).characters }
     end
 

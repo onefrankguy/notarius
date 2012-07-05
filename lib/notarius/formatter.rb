@@ -23,30 +23,37 @@ module Notarius
 
     def call severity, timestamp, application, message
       result = []
-      result << format_severity(severity) if severity
-      result << format_timestamp(timestamp) if timestamp
-      result << format_message(message) if message
-      "#{result.join(' ')}\n"
+      result << format_message(severity, timestamp, message)
+      result << format_backtrace(message)
+      result.flatten!
+      result.compact!
+      result.map! { |line| make_tweetable(line) }
+      "#{result.join("\n")}\n"
     end
 
 
     private
 
-    def format_severity severity
-      severity.strip.upcase
+    def format_message severity, timestamp, message
+      result = []
+      result << format_severity(severity) if severity
+      result << format_timestamp(timestamp) if timestamp
+      result << parse_message(message) if message
+      result.compact!
+      result.join(' ')
     end
 
-    def format_message message
-      result = [parse_message(message)]
+    def format_backtrace message
       if message.respond_to?(:backtrace)
         backtrace = [message.backtrace]
         backtrace.flatten!
         backtrace.compact!
-        result << backtrace.map { |line| "! #{clean_message(line)}" }
+        backtrace.map { |line| "! #{clean_message(line)}" }
       end
-      result.flatten!
-      result.map! { |line| make_tweetable(line) }
-      result.join("\n")
+    end
+
+    def format_severity severity
+      severity.strip.upcase
     end
 
     def parse_message message
