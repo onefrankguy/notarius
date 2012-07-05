@@ -34,12 +34,11 @@ module Notarius
     private
 
     def format_message severity, timestamp, message
-      result = []
-      result << format_severity(severity) if severity
-      result << format_timestamp(timestamp) if timestamp
-      result << parse_message(message) if message
-      result.compact!
-      result.join(' ')
+      result = ''
+      result << " #{format_severity(severity)}" if severity
+      result << " #{format_timestamp(timestamp)}" if timestamp
+      result << " #{parse_message(message)}" if message
+      result.strip
     end
 
     def format_backtrace message
