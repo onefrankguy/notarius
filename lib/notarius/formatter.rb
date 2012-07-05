@@ -26,7 +26,6 @@ module Notarius
       result << format_message(severity, timestamp, message)
       result << format_backtrace(message)
       result.flatten!
-      result.compact!
       result.map! { |line| make_tweetable(line) }
       "#{result.join("\n")}\n"
     end
@@ -44,12 +43,11 @@ module Notarius
     end
 
     def format_backtrace message
-      if message.respond_to?(:backtrace)
-        backtrace = [message.backtrace]
-        backtrace.flatten!
-        backtrace.compact!
-        backtrace.map { |line| "! #{clean_message(line)}" }
-      end
+      backtrace = []
+      backtrace << message.backtrace if message.respond_to?(:backtrace)
+      backtrace.flatten!
+      backtrace.compact!
+      backtrace.map { |line| "! #{clean_message(line)}" }
     end
 
     def format_severity severity
