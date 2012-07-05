@@ -4,6 +4,11 @@ describe Notarius::Formatter do
   describe '#call' do
     let(:formatter) { Notarius::Formatter.new }
 
+    it 'allows all arguments to be nil' do
+      message = formatter.call(nil, nil, nil, nil)
+      message.should == "\n"
+    end
+
     it 'converts whitespace to spaces' do
       message = "\sMessage\r\nwith\twhitespace  "
       message = formatter.call(nil, nil, nil, message)
