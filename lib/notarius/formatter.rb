@@ -43,8 +43,7 @@ module Notarius
     end
 
     def format_backtrace message
-      trace = []
-      trace << message.backtrace if message.respond_to?(:backtrace)
+      trace = message.respond_to?(:backtrace) ? [message.backtrace] : []
       trace.flatten!
       trace.compact!
       trace.map { |line| "! #{clean_message(line)}" }
