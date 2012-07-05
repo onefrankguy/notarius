@@ -22,12 +22,12 @@ module Notarius
     # @return [String] formatted as "SEVERITY [timestamp] message\\n"
 
     def call severity, timestamp, application, message
-      result = []
-      result << format_message(severity, timestamp, message)
-      result << format_backtrace(message)
-      result.flatten!
-      result.map! { |line| make_tweetable(line) }
-      "#{result.join("\n")}\n"
+      lines = []
+      lines << format_message(severity, timestamp, message)
+      lines << format_backtrace(message)
+      lines.flatten!
+      lines.map! { |line| make_tweetable(line) }
+      "#{lines.join("\n")}\n"
     end
 
 
