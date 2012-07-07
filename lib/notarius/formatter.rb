@@ -48,7 +48,7 @@ module Notarius
     end
 
     def format_severity severity
-      severity.strip.upcase if severity
+      severity.gsub(/\s+/, '').upcase if severity
     end
 
     def parse_message message

@@ -26,9 +26,10 @@ describe Notarius::Formatter do
       message.should == "INFO\n"
     end
 
-    it 'removes extra whitespace from severity' do
-      message = formatter.call("\swarn\s", nil, nil, nil)
-      message.should == "WARN\n"
+    it 'removes whitespace from severity' do
+      timestamp = Time.parse('2012-07-07 16:20:29 -0400')
+      message = formatter.call("\s\rWA\tRN\n", timestamp, nil, nil)
+      message.should == "WARN [2012-07-07T20:20:29Z]\n"
     end
 
     it 'ignores program name field' do
