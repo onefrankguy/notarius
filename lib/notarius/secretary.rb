@@ -17,16 +17,8 @@ module Notarius
     # @param [Config] config the configuration for this Secretary
 
     def configure config
-      if config.console
-        add :console, logger(config.console, $stdout)
-      else
-        delete :console
-      end
-      if config.file
-        add :file, config.file
-      else
-        delete :file
-      end
+      update :console, config.console, $stdout
+      update :file, config.file
     end
 
     ##
@@ -65,6 +57,14 @@ module Notarius
       end
     end
 
+    def update key, stream, default = nil
+      if stream
+        add key, logger(stream, default)
+      else
+        delete key
+      end
+    end
+
     def add key, stream
       @loggers[key] = Logger.new stream
       @loggers[key].formatter = Formatter.new
@@ -80,7 +80,8 @@ module Notarius
     end
 
     def loggable? stream
-      stream.respond_to?(:write) && stream.respond_to?(:close)
+      io = stream.respond_to?(:write) && stream.respond_to?(:close)
+      io || stream.kind_of?(String)
     end
   end
 end
