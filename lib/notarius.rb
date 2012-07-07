@@ -19,7 +19,7 @@ module Notarius
   def self.configure name, &block
     name = namespace name
     @configs[name] ||= Config.new
-    @configs[name].instance_eval(&block) if block
+    block.call @configs[name] if block
     return if self.const_defined? name
 
     mod = Module.new do
