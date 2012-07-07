@@ -83,8 +83,7 @@ describe Notarius::Formatter do
       exception = Exception.new('message')
       exception.set_backtrace ['trace this line', 'back to here']
       lines = formatter.call(nil, nil, nil, exception).split("\n")
-      results = ['message', '! trace this line', '! back to here']
-      lines.should == results
+      lines.should == ['message', '! trace this line', '! back to here']
     end
 
     it 'formats objects nicely' do
@@ -124,8 +123,7 @@ describe Notarius::Formatter do
         end
       end
       lines = formatter.call(nil, nil, nil, exception.new).split("\n")
-      results = ['message', '! backtrace']
-      lines.should == results
+      lines.should == ['message', '! backtrace']
     end
   end
 end
