@@ -34,11 +34,10 @@ module Notarius
     private
 
     def format_message severity, timestamp, message
-      result = ''
-      result << " #{format_severity(severity)}" if severity
-      result << " #{format_timestamp(timestamp)}" if timestamp
-      result << " #{parse_message(message)}" if message
-      result.strip
+      severity = format_severity severity
+      timestamp = format_timestamp timestamp
+      message = parse_message message
+      "#{severity} #{timestamp} #{message}".strip
     end
 
     def format_backtrace message
@@ -49,12 +48,12 @@ module Notarius
     end
 
     def format_severity severity
-      severity.strip.upcase
+      severity.strip.upcase if severity
     end
 
     def parse_message message
-      result = message.respond_to?(:message) ? message.message : message
-      clean_message(result)
+      message = message.message if message.respond_to?(:message)
+      clean_message(message || '')
     end
 
     def clean_message message
@@ -63,7 +62,7 @@ module Notarius
     end
 
     def format_timestamp timestamp
-      "[#{timestamp.utc.iso8601}]"
+      "[#{timestamp.utc.iso8601}]" if timestamp
     end
 
     def make_tweetable message
