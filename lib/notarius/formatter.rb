@@ -48,7 +48,7 @@ module Notarius
     end
 
     def format_severity severity
-      severity.gsub(/\s+/, '').upcase if severity
+      severity.upcase.gsub(/\s+/, '') if severity
     end
 
     def parse_message message
@@ -58,7 +58,7 @@ module Notarius
 
     def clean_message message
       message = message.inspect unless message.kind_of?(String)
-      message.gsub(/\s+/, ' ').strip
+      message.strip.gsub(/\s+/, ' ')
     end
 
     def format_timestamp timestamp
