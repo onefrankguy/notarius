@@ -8,7 +8,8 @@ module Notarius
   ##
   # Configure logging for the named module.
   #
-  # @yieldparam log [Config]
+  # @param [#to_s] name name of the module
+  # @yieldparam log [Config] configuration for the module
   #
   # @example
   #   Notarius.configure 'BIG' do |log|
@@ -33,7 +34,8 @@ module Notarius
   end
 
   ##
-  # Return a config with the given name. Validates the config first.
+  # Validate and return a config with the given name.
+  # @param [String] name name of config
   # @return [Config, nil] matching config or +nil+ if none found
   # @see Notarius.validate
 
@@ -60,12 +62,10 @@ module Notarius
   private_class_method :validate
 
   ##
-  # Convert an +Object+ to a +String+ that can be used as a namespace.
-  # This has to generate something that matches Ruby's idea of a
-  # constant.
-  # @raise [RuntimeError] when +name+ is empty
+  # Convert an +Object+ to a +String+ that can be used as a constant.
   # @param [#to_s] name name of the namespace
   # @return [String] converted namespace
+  # @raise [RuntimeError] when +name+ is empty
 
   def self.namespace name
     name = name.to_s
