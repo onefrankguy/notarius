@@ -24,6 +24,7 @@ module Notarius
     ##
     # Log an informative message. Informative messages show up the log
     # with "INFO" at the start of the line.
+    # @param [String, #message, #backtrace, #inspect] message
 
     def info message
       log Logger::INFO, message
@@ -32,6 +33,7 @@ module Notarius
     ##
     # Log a warning message. Warning messages show up in the log with
     # "WARN" at the start of the line.
+    # @param [String, #message, #backtrace, #inspect] message
 
     def warn message
       log Logger::WARN, message
@@ -40,6 +42,7 @@ module Notarius
     ##
     # Log an error message. Error messages show up in the log with
     # "ERROR" at the start of the line.
+    # @param [String, #message, #backtrace, #inspect] message
 
     def error message
       log Logger::ERROR, message
