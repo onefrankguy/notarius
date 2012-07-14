@@ -19,13 +19,6 @@ RSpec::Core::RakeTask.new :coverage do |t|
   t.rspec_opts = ['--require simplecov_helper']
 end
 
-desc 'Run the YARD doc server.'
-task :doc, [:options] => :clean do |t, args|
-  options = args[:options] || ''
-  options += ' --reload' if options.include? 'server'
-  sh "yard #{options}"
-end
-
 desc 'Build the gem.'
 task :build do
   sh "gem build #{name}.gemspec"
@@ -48,6 +41,17 @@ begin
     flags = args[:flags] ? "-#{args[:flags]}" : ''
     files = FileList['lib/**/*.rb'].join(' ')
     sh "flog #{flags} #{files}"
+  end
+rescue Gem::LoadError
+end
+
+begin
+  gem 'yard'
+  desc 'Generate documentation with YARD.'
+  task :yard, [:options] => :clean do |t, args|
+    options = args[:options] || ''
+    options += ' --reload' if options.include? 'server'
+    sh "yard #{options}"
   end
 rescue Gem::LoadError
 end
