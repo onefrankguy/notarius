@@ -9,7 +9,7 @@ module Notarius
   @configs = {}
 
   ##
-  # Configures a Notarius logging module. If a module with the given
+  # Configure a Notarius logging module. If a module with the given
   # name exists, it will be reconfigured. Otherwise, a new one will
   # be created.
   #
@@ -40,7 +40,7 @@ module Notarius
   end
 
   ##
-  # Finds the configuration for a module.
+  # Find the configuration for a module.
   # @private
   # @param [String] name module's name
   # @return [Config, nil] module's config or +nil+ if none found
@@ -51,7 +51,7 @@ module Notarius
   end
 
   ##
-  # Validates a module's configuration.
+  # Validate a module's configuration.
   # @private
   # @param [String] name module's name
   # @return [Nothing]
@@ -70,7 +70,7 @@ module Notarius
   private_class_method :validate
 
   ##
-  # Generates a name that can be used for a module.
+  # Generate a name that can be used for a module.
   # @private
   # @param [#to_s] name requested name
   # @return [String] valid name
