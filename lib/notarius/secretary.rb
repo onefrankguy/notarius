@@ -2,6 +2,9 @@ require 'notarius/formatter'
 require 'logger'
 
 module Notarius
+  ##
+  # Provides a logging API.
+
   class Secretary
     ##
     # Create a new instance of Secretary.

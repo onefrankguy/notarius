@@ -1,4 +1,7 @@
 module Notarius
+  ##
+  # Holds configuration information for a logging namespace.
+
   class Config
     ##
     # Turn console logging on or off. Default is off.

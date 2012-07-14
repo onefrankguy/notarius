@@ -2,6 +2,9 @@ require 'notarius/secretary'
 require 'notarius/config'
 require 'notarius/version'
 
+##
+# Notarius is a logging library with opinions.
+
 module Notarius
   @configs = {}
 
