@@ -6,7 +6,7 @@ module Notarius
   # +Logger::Formatter+ class, but has its own opinions:
   #
   # * Whitespace in the message is converted to spaces.
-  # * Output is truncated to 140 characters.
+  # * Output is truncated to 140 characters per line.
   # * Timestamps are formatted as ISO 8601 in UTC.
   # * Lines in call stacks are prefixed with !'s.
   # * Any of the arguments to #call can be nil.
