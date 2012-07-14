@@ -15,7 +15,7 @@ module Notarius
   #
   # @param [#to_s] name module's name
   # @yieldparam log [Config] module's configuration
-  # @return [Nothing]
+  # @return [void]
   #
   # @example
   #   Notarius.configure 'BIG' do |log|
@@ -54,7 +54,7 @@ module Notarius
   # Validate a module's configuration.
   # @private
   # @param [String] name module's name
-  # @return [Nothing]
+  # @return [void]
   # @raise [RuntimeError] if module's file is already being logged to
 
   def self.validate name

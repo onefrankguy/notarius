@@ -18,6 +18,7 @@ module Notarius
     ##
     # Configure a Secretary.
     # @param [Config] config the configuration for this Secretary
+    # @return [void]
 
     def configure config
       update :console, config.console, $stdout
