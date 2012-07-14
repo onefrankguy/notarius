@@ -1,6 +1,6 @@
 module Notarius
   ##
-  # Holds configuration information for a logging namespace.
+  # Holds the configuration for a logging module.
 
   class Config
     ##
@@ -10,7 +10,7 @@ module Notarius
 
     ##
     # Turn file logging on or off. Default is off.
-    # @return [String, nil] path to the file, +nil+ if off
+    # @return [String, nil] the path to the file or +nil+ if off
     attr_accessor :file
   end
 end

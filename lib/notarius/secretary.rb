@@ -3,11 +3,11 @@ require 'logger'
 
 module Notarius
   ##
-  # Provides a logging API.
+  # Provides an API for logging modules.
 
   class Secretary
     ##
-    # Create a new instance of Secretary.
+    # Creates a new instance of a Secretary.
     # @return [Secretary]
 
     def initialize
@@ -16,8 +16,8 @@ module Notarius
     end
 
     ##
-    # Configure a Secretary.
-    # @param [Config] config the configuration for this Secretary
+    # Configures a Secretary.
+    # @param [Config] config the configuration
     # @return [void]
 
     def configure config
@@ -26,27 +26,30 @@ module Notarius
     end
 
     ##
-    # Log an informative message. Informative messages show up the log
+    # Logs an informative message. Informative messages show up the log
     # with "INFO" at the start of the line.
     # @param [String, #message, #backtrace, #inspect] message
+    # @return [void]
 
     def info message
       log Logger::INFO, message
     end
 
     ##
-    # Log a warning message. Warning messages show up in the log with
+    # Logs a warning message. Warning messages show up in the log with
     # "WARN" at the start of the line.
     # @param [String, #message, #backtrace, #inspect] message
+    # @return [void]
 
     def warn message
       log Logger::WARN, message
     end
 
     ##
-    # Log an error message. Error messages show up in the log with
+    # Logs an error message. Error messages show up in the log with
     # "ERROR" at the start of the line.
     # @param [String, #message, #backtrace, #inspect] message
+    # @return [void]
 
     def error message
       log Logger::ERROR, message

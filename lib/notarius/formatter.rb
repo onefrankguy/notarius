@@ -3,7 +3,7 @@ require 'time'
 module Notarius
   ##
   # Handles formatting of log messages. It's compatable with Ruby's
-  # +Logger::Formatter+ class, but has its own opinions:
+  # +Logger+ class, but has its own opinions:
   #
   # * Whitespace in the message is converted to spaces.
   # * Output is truncated to 140 characters per line.
@@ -13,7 +13,8 @@ module Notarius
 
   class Formatter
     ##
-    # This is the interface Ruby's +Logger+ class expects.
+    # Generates a formatted log statement. This is the interface Ruby's
+    # +Logger+ class expects.
     # @param [String] severity the severity level of the message
     # @param [Date] timestamp the timestamp for the message
     # @param [Object] application unused

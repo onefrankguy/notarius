@@ -9,12 +9,11 @@ module Notarius
   @configs = {}
 
   ##
-  # Configure a Notarius logging module. If a module with the given
-  # name exists, it will be reconfigured. Otherwise, a new one will
-  # be created.
+  # Configures a logging module. If a matching module exists, it will be
+  # reconfigured. Otherwise, a new module will be created.
   #
-  # @param [#to_s] name module's name
-  # @yieldparam log [Config] module's configuration
+  # @param [#to_s] name the module's name
+  # @yieldparam log [Config] the module's configuration
   # @return [void]
   #
   # @example
@@ -40,10 +39,11 @@ module Notarius
   end
 
   ##
-  # Find the configuration for a module.
+  # Gets the configuration for a module.
   # @private
-  # @param [String] name module's name
-  # @return [Config, nil] module's config or +nil+ if none found
+  # @param [String] name the module's name
+  # @return [Config, nil] the module's configuration or +nil+ if none
+  #   was found
 
   def self.config name
     validate name
@@ -51,11 +51,11 @@ module Notarius
   end
 
   ##
-  # Validate a module's configuration.
+  # Validates a module's configuration.
   # @private
-  # @param [String] name module's name
+  # @param [String] name the module's name
   # @return [void]
-  # @raise [RuntimeError] if module's file is already being logged to
+  # @raise [RuntimeError] if the module's file is used by another module
 
   def self.validate name
     config = @configs[name]
@@ -70,11 +70,11 @@ module Notarius
   private_class_method :validate
 
   ##
-  # Generate a name that can be used for a module.
+  # Generates a name that can be used for a module.
   # @private
-  # @param [#to_s] name requested name
-  # @return [String] valid name
-  # @raise [RuntimeError] if +name+ is empty
+  # @param [#to_s] name the requested name
+  # @return [String] the module's name
+  # @raise [RuntimeError] if the requested name is empty
 
   def self.namespace name
     name = name.to_s
