@@ -137,6 +137,12 @@ intend.
 
 Notarius tries to make things easier.
 
+History
+-------
+
+See the {file:roadmap.md} for where we're going, and {file:history.md}
+for where we've been.
+
 License
 -------
 
