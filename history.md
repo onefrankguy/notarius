@@ -1,3 +1,8 @@
+### 0.2.6 / 2012-07-15 ###
+
+* 1 minor enhancement
+  * Adds a "history.md" file to keep track of changes.
+
 ### 0.2.5 / 2012-07-14 ###
 
 * 2 minor enhancements

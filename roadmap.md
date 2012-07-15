@@ -7,7 +7,7 @@ _duodecimo_. In a similar fashion to the [git flow][] branching model,
 releases are unversioned. This is a general timeline for what gets
 worked on when.
 
-The current release, version 0.1.0, corresponds to the _folio_ stage.
+The current release, version 0.2.6, corresponds to the _quarto_ stage.
 
 folio
 -----
