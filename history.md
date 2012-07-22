@@ -1,3 +1,9 @@
+### 0.2.7 / 2012-07-22 ###
+
+* 2 bug fixes
+  * Logger objects get closed when reconfigured.
+  * Logger objects are now reused where possible.
+
 ### 0.2.6 / 2012-07-15 ###
 
 * 1 minor enhancement
