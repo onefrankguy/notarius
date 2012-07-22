@@ -1,5 +1,8 @@
 ### 0.2.7 / 2012-07-22 ###
 
+* 1 minor enhancement
+  * SimpleCov is no longer a development requirement.
+
 * 2 bug fixes
   * Logger objects get closed when reconfigured.
   * Logger objects are now reused where possible.
