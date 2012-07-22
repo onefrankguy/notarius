@@ -102,15 +102,11 @@ describe Notarius do
     end
 
     it 'throws an error if a namespace is empty' do
-      expect do
-        Notarius.configure ''
-      end.to raise_error(RuntimeError)
+      expect { Notarius.configure '' }.to raise_error(RuntimeError)
     end
 
     it 'throws an error if a namespace is nil' do
-      expect do
-        Notarius.configure nil
-      end.to raise_error(RuntimeError)
+      expect { Notarius.configure nil }.to raise_error(RuntimeError)
     end
 
     it 'only checks for namespaces in itself' do
