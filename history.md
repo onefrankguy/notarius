@@ -1,3 +1,12 @@
+### 0.2.7 / 2012-07-22 ###
+
+* 1 minor enhancement
+  * Cleans up code to improve readability.
+  * Fleshes out documentation of the public API.
+
+* 1 bug fix
+  * Restricts namespace searching to the Notarius module.
+
 ### 0.2.6 / 2012-07-15 ###
 
 * 1 minor enhancement
