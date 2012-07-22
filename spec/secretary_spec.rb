@@ -99,6 +99,33 @@ describe Notarius::Secretary do
       secretary.info 'pasta'
       config.console.should be_closed
     end
+
+    it 'closes a logger when configurations change' do
+      secretary = Notarius::Secretary.new
+
+      config1 = Notarius::Config.new
+      config1.console = StringIO.new
+      secretary.configure config1
+
+      config2 = Notarius::Config.new
+      config2.console = StringIO.new
+      secretary.configure config2
+
+      config1.console.should be_closed
+    end
+
+    it 'reuses loggers when possible' do
+      count = ObjectSpace.each_object(Logger).count
+
+      secretary = Notarius::Secretary.new
+
+      config = Notarius::Config.new
+      config.console = StringIO.new
+
+      3.times { secretary.configure config }
+
+      ObjectSpace.each_object(Logger).count.should == count + 1
+    end
   end
 
   it 'skips duplicate messages per logger' do
