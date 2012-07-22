@@ -68,11 +68,8 @@ module Notarius
     end
 
     def update key, stream, default = nil
-      if stream
-        add key, logger(stream, default)
-      else
-        delete key
-      end
+      delete key
+      add key, logger(stream, default) if stream
     end
 
     def add key, stream
