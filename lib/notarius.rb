@@ -23,7 +23,7 @@ module Notarius extend self
   #   end
 
   def configure name, &block
-    name = namespace name
+    name = make_const name
     @configs[name] ||= Config.new
     block.call @configs[name] if block
     return if const_defined? name, false
@@ -60,7 +60,7 @@ module Notarius extend self
     end
   end
 
-  def namespace name
+  def make_const name
     name = name.to_s
     fail "namespaces can't be empty" if name.empty?
     name[0] = name[0].capitalize
