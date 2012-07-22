@@ -15,6 +15,7 @@ module Notarius extend self
   # @param [#to_s] name the module's name
   # @yieldparam log [Config] the module's configuration
   # @return [void]
+  # @raise [RuntimeError] when name is empty or +nil+
   #
   # @example
   #   Notarius.configure 'BIG' do |log|
