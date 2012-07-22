@@ -39,11 +39,7 @@ module Notarius extend self
   end
 
   ##
-  # Gets the configuration for a module.
   # @private
-  # @param [String] name the module's name
-  # @return [Config, nil] the module's configuration or +nil+ if none
-  #   was found
 
   def config name
     validate name
@@ -52,13 +48,6 @@ module Notarius extend self
 
 
   private
-
-  ##
-  # Validates a module's configuration.
-  # @private
-  # @param [String] name the module's name
-  # @return [void]
-  # @raise [RuntimeError] if the module's file is used by another module
 
   def validate name
     config = @configs[name]
@@ -70,13 +59,6 @@ module Notarius extend self
       end
     end
   end
-
-  ##
-  # Generates a name that can be used for a module.
-  # @private
-  # @param [#to_s] name the requested name
-  # @return [String] the module's name
-  # @raise [RuntimeError] if the requested name is empty
 
   def namespace name
     name = name.to_s
