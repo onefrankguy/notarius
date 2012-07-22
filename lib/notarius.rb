@@ -5,7 +5,7 @@ require 'notarius/version'
 ##
 # Notarius is a logging library with opinions.
 
-module Notarius
+module Notarius extend self
   @configs = {}
 
   ##
@@ -15,6 +15,7 @@ module Notarius
   # @param [#to_s] name the module's name
   # @yieldparam log [Config] the module's configuration
   # @return [void]
+  # @raise [RuntimeError] when name is empty or +nil+
   #
   # @example
   #   Notarius.configure 'BIG' do |log|
@@ -22,11 +23,11 @@ module Notarius
   #     log.file = '/var/log/notarius/big.log'
   #   end
 
-  def self.configure name, &block
-    name = namespace name
+  def configure name, &block
+    name = make_const name
     @configs[name] ||= Config.new
     block.call @configs[name] if block
-    return if self.const_defined? name
+    return if const_defined? name, false
 
     mod = Module.new do
       define_method :log do
@@ -35,29 +36,21 @@ module Notarius
         @secretary
       end
     end
-    self.const_set name, mod
+    const_set name, mod
   end
 
   ##
-  # Gets the configuration for a module.
   # @private
-  # @param [String] name the module's name
-  # @return [Config, nil] the module's configuration or +nil+ if none
-  #   was found
 
-  def self.config name
+  def config name
     validate name
     @configs[name]
   end
 
-  ##
-  # Validates a module's configuration.
-  # @private
-  # @param [String] name the module's name
-  # @return [void]
-  # @raise [RuntimeError] if the module's file is used by another module
 
-  def self.validate name
+  private
+
+  def validate name
     config = @configs[name]
     if config && config.file
       @configs.each do |n, c|
@@ -67,20 +60,11 @@ module Notarius
       end
     end
   end
-  private_class_method :validate
 
-  ##
-  # Generates a name that can be used for a module.
-  # @private
-  # @param [#to_s] name the requested name
-  # @return [String] the module's name
-  # @raise [RuntimeError] if the requested name is empty
-
-  def self.namespace name
+  def make_const name
     name = name.to_s
     fail "namespaces can't be empty" if name.empty?
     name[0] = name[0].capitalize
     name
   end
-  private_class_method :namespace
 end

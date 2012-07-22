@@ -112,5 +112,11 @@ describe Notarius do
         Notarius.configure nil
       end.to raise_error(RuntimeError)
     end
+
+    it 'only checks for namespaces in itself' do
+      Object.const_set :Notari, 0
+      Notarius.configure :Notari
+      Notarius.const_defined?(:Notari, false).should be_true
+    end
   end 
 end
