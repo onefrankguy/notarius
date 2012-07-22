@@ -14,11 +14,6 @@ RSpec::Core::RakeTask.new :spec do |t|
   t.ruby_opts = ['-w']
 end
 
-desc 'Generate SimpleCov spec coverage.'
-RSpec::Core::RakeTask.new :coverage do |t|
-  t.rspec_opts = ['--require simplecov_helper']
-end
-
 desc 'Build the gem.'
 task :build do
   sh "gem build #{name}.gemspec"
@@ -32,6 +27,15 @@ end
 desc 'Uninstall the gem.'
 task :uninstall do
   sh "gem uninstall #{name}"
+end
+
+begin
+  gem 'simplecov'
+  desc 'Generate SimpleCov spec coverage.'
+  RSpec::Core::RakeTask.new :coverage do |t|
+    t.rspec_opts = ['--require simplecov_helper']
+  end
+rescue Gem::LoadError
 end
 
 begin
