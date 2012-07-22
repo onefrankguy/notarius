@@ -58,7 +58,7 @@ describe Notarius do
   it 'allows for unique namespaces' do
     tempfiles('player', 'monster') do |player_log, monster_log|
       Notarius.configure('Player') { |l| l.file = player_log }
-      player = Class.new do 
+      player = Class.new do
         include Notarius::Player
         def initialize
           log.info 'New player created!'
@@ -118,5 +118,5 @@ describe Notarius do
       Notarius.configure :Notari
       Notarius.const_defined?(:Notari, false).should be_true
     end
-  end 
+  end
 end

@@ -40,7 +40,7 @@ describe Notarius::Secretary do
 
       config = Notarius::Config.new
       config.console = io1
-      config.file = io2 
+      config.file = io2
       secretary.configure config
 
       secretary.info 'info message'
@@ -129,25 +129,25 @@ describe Notarius::Secretary do
   end
 
   it 'skips duplicate messages per logger' do
-      io1 = StringIO.new
-      io2 = StringIO.new
+    io1 = StringIO.new
+    io2 = StringIO.new
 
-      secretary = Notarius::Secretary.new
+    secretary = Notarius::Secretary.new
 
-      config1 = Notarius::Config.new
-      config1.console = io1
-      secretary.configure config1
+    config1 = Notarius::Config.new
+    config1.console = io1
+    secretary.configure config1
 
-      secretary.error 'same message'
+    secretary.error 'same message'
 
-      config2 = Notarius::Config.new
-      config2.console = io1
-      config2.file = io2
-      secretary.configure config2
+    config2 = Notarius::Config.new
+    config2.console = io1
+    config2.file = io2
+    secretary.configure config2
 
-      secretary.info 'same message'
+    secretary.info 'same message'
 
-      io1.string.should_not match_message(:INFO, 'same message')
-      io2.string.should match_message(:INFO, 'same message')
+    io1.string.should_not match_message(:INFO, 'same message')
+    io2.string.should match_message(:INFO, 'same message')
   end
 end
