@@ -113,6 +113,19 @@ describe Notarius::Secretary do
 
       config1.console.should be_closed
     end
+
+    it 'reuses loggers when possible' do
+      count = ObjectSpace.each_object(Logger).count
+
+      secretary = Notarius::Secretary.new
+
+      config = Notarius::Config.new
+      config.console = StringIO.new
+
+      3.times { secretary.configure config }
+
+      ObjectSpace.each_object(Logger).count.should == count + 1
+    end
   end
 
   it 'skips duplicate messages per logger' do

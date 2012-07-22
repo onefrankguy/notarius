@@ -11,6 +11,7 @@ module Notarius
     # @return [Secretary]
 
     def initialize
+      @streams = {}
       @loggers = {}
       @messages = {}
     end
@@ -68,16 +69,24 @@ module Notarius
     end
 
     def update key, stream, default = nil
-      delete key
-      add key, logger(stream, default) if stream
+      if stream
+        add key, logger(stream, default)
+      else
+        delete key
+      end
     end
 
     def add key, stream
-      @loggers[key] = Logger.new stream
-      @loggers[key].formatter = Formatter.new
+      if @streams[key] != stream
+        delete key
+        @streams[key] = stream
+        @loggers[key] = Logger.new stream
+        @loggers[key].formatter = Formatter.new
+      end
     end
 
     def delete key
+      @streams.delete(key)
       logger = @loggers.delete(key)
       logger.close unless logger.nil?
     end
