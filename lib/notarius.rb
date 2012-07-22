@@ -5,7 +5,7 @@ require 'notarius/version'
 ##
 # Notarius is a logging library with opinions.
 
-module Notarius
+module Notarius extend self
   @configs = {}
 
   ##
@@ -22,7 +22,7 @@ module Notarius
   #     log.file = '/var/log/notarius/big.log'
   #   end
 
-  def self.configure name, &block
+  def configure name, &block
     name = namespace name
     @configs[name] ||= Config.new
     block.call @configs[name] if block
@@ -45,10 +45,13 @@ module Notarius
   # @return [Config, nil] the module's configuration or +nil+ if none
   #   was found
 
-  def self.config name
+  def config name
     validate name
     @configs[name]
   end
+
+
+  private
 
   ##
   # Validates a module's configuration.
@@ -57,7 +60,7 @@ module Notarius
   # @return [void]
   # @raise [RuntimeError] if the module's file is used by another module
 
-  def self.validate name
+  def validate name
     config = @configs[name]
     if config && config.file
       @configs.each do |n, c|
@@ -67,7 +70,6 @@ module Notarius
       end
     end
   end
-  private_class_method :validate
 
   ##
   # Generates a name that can be used for a module.
@@ -76,11 +78,10 @@ module Notarius
   # @return [String] the module's name
   # @raise [RuntimeError] if the requested name is empty
 
-  def self.namespace name
+  def namespace name
     name = name.to_s
     fail "namespaces can't be empty" if name.empty?
     name[0] = name[0].capitalize
     name
   end
-  private_class_method :namespace
 end
