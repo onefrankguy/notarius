@@ -26,7 +26,7 @@ module Notarius extend self
     name = namespace name
     @configs[name] ||= Config.new
     block.call @configs[name] if block
-    return if self.const_defined? name
+    return if self.const_defined? name, false
 
     mod = Module.new do
       define_method :log do
